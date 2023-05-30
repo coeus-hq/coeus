@@ -1,0 +1,302 @@
+<!-- Add Course Modal -->
+<div class="modal fade" id="add-course-modal" tabindex="-1" aria-labelledby="addCourseModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="badge badge-primary">
+                    <img src="/static/images/icon-course.svg" alt="">
+                </span>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="add-new-h3">
+                <h3 class="fw-bold"> Add new course </h3>
+            </div>
+                <!-- Course Number input -->
+                <div class="form-outline mb-4">
+                    <input required type="text" id="add-course-number" name="add-course-number" class="form-control" placeholder="1101" />
+                    <label class="form-label"  for="add-course-number">Course number</label>
+                </div>
+
+
+
+                <!-- Course Title input -->
+                <div class="form-outline mb-4">
+                    <input required type="text" id="add-course-title" name="add-course-title" class="form-control" placeholder="Economics" />
+                    <label class="form-label" for="add-course-title"  > Title</label>
+                </div>
+
+
+                <!-- Semester / Year inputs -->
+                <div class="d-flex justify-content-between r-gap-1">
+                    <select id="add-course-semester" name="add-course-semester" class="form-select custom-form-select">
+                        <option value="" disabled selected>Semester</option>
+                        <option value="Fall">Fall</option>
+                        <option value="Winter">Winter</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                    </select>
+
+                    <div class="form-outline mb-4">
+                        <input required type="number" id="add-course-year" name="add-course-year" max="9999" min="1"
+                            class="form-control" placeholder="2023" />
+                        <label class="form-label"  for="add-course-year">Year</label>
+                    </div>
+                </div>
+
+                <!-- Start and End Date Input -->
+                <div class="d-flex justify-content-between r-gap-1">
+                    <div class="start-end-form form-outline mb-4">
+                        <input required type="date" id="add-course-start" name="add-course-start"
+                            class="opacity1 form-control" placeholder="1/23/23" />
+                        <label class="form-label" for="add-course-start">Start Date</label>
+                    </div>
+                    <div class="start-end-form form-outline mb-4">
+                        <input required type="date" id="add-course-end"  name="add-course-end" class="opacity1 form-control" placeholder="5/24/23"/>
+                        <label class=" form-label" for="add-course-end">End Date</label>
+                    </div>
+                </div>
+                <!-- Add Section input -->
+                <div>
+                    <div class="d-flex">
+                        <div class="form-outline mb-4">
+                            <input required type="number" id="course-sections" name="course-sections"
+                                class="form-control course-sections" max="9999" min="1"
+                                oninput="generateScheduleInputs()" placeholder="0"/>
+                            <label class="form-label" for="course-sections">Add Number of Sections</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scheduleInputsContainer">
+                </div>
+
+                <div id="addCourseFormFillError" class="modal-message">
+                    <p class="r-red-font">
+                        Please fill out all fields!
+                    </p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" data-mdb-dismiss="modal">Cancel</button>
+                <button onclick="addCourse(event)" value="" type="button" class="mgmt-btn-gray"
+                    id="addCourseButton">Add Course</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Course Modal -->
+
+
+
+
+<!-- Confirm Delete Course Modal -->
+<div class="modal fade" id="delete-course-modal" tabindex="-1" aria-labelledby="delete-course-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <span class="badge badge-danger">
+                    <img src="/static/images/icon-trash-large-red.svg" alt="">
+                </span>
+
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="fw-bold"> Do you want to delete this course section?</h3>
+                <div class="d-flex align-items-center">
+                    <div class="ms-3 my-5">
+                        <p id="delete-modal-title" class="fw-bold mb-1"></p>
+                        <p id="delete-modal-section-number" class="text-muted mb-0"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" data-mdb-dismiss="modal">Cancel</button>
+                <button value="" type="button" class="mgmt-btn-delete modalDeleteBtn" id="delete-course-section-modal"
+                    onclick="deleteCourseSection()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Confirm Delete Course Modal -->
+
+
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="edit-course-modal" tabindex="-1" aria-labelledby="edit-course-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="badge badge-primary">
+                    <img src="/static/images/icon-edit.svg" alt="">
+                </span>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Tabs navs -->
+                <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#edit-tab-1" role="tab"
+                            aria-controls="edit-tab-1" aria-selected="true">Edit Course & Section</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#edit-tab-2" role="tab"
+                            aria-controls="edit-tab-2" aria-selected="false">Edit Section</a>
+                    </li>
+                </ul>
+                <!-- Tabs navs -->
+
+                <!-- Tabs content -->
+                <div class="tab-content" id="ex2-content">
+                    <div class="tab-pane fade show active" id="edit-tab-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+                        <h3 class="fw-bold"> Edit course: </h3>
+
+                        <p> This action updates all course data on the table
+                        </p>
+
+                        <div class="d-flex align-items-center">
+                            <div class="edit-course-h3 ms-3 my-3">
+                                <p class="edit-course-h3 mb-1" id="edit-modal-course-number"></p>
+                                <p class="edit-course-h3 mb-1" id="edit-modal-course-title"></p>
+                                <p class="edit-course-h3 mb-1" id="edit-modal-section"></p>
+                            </div>
+                        </div>
+
+                        <form>
+                            <!-- Course Number input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="edit-course-number" class="form-control" />
+                                <label class="form-label" for="edit-course-number">Number</label>
+                            </div>
+
+                            <!-- Course Title input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="edit-course-title" class="form-control" />
+                                <label class="form-label" for="edit-course-title">Title</label>
+                            </div>
+
+                            <!-- Semester / Year inputs -->
+                            <div class="d-flex justify-content-between r-gap-1">
+
+                                <select id="edit-course-semester" class="form-select custom-form-select">
+                                    <option value="" disabled selected>Semester</option>
+                                    <option value="Fall">Fall</option>
+                                    <option value="Winter">Winter</option>
+                                    <option value="Spring">Spring</option>
+                                    <option value="Summer">Summer</option>
+                                </select>
+
+                                <div class="form-outline mb-4">
+                                    <input type="number" id="edit-course-year" max="9999" min="1"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-course-year">Year</label>
+                                </div>
+                            </div>
+
+                            <!-- Edit Start / End Date inputs -->
+                            <div class="d-flex justify-content-between r-gap-1">
+                                <div class="form-outline mb-4">
+                                    <input required type="date" id="edit-course-start" name="edit-course-start"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-course-start">Start Date</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input required type="date" id="edit-course-end" name="edit-course-end"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-course-end">End Date</label>
+                                </div>
+                            </div>
+                            <!-- Edit Schedual Days And Time -->
+                            <div class="d-flex justify-content-between r-gap-1">
+                                <div class="form-outline mb-4">
+                                    <input required type="text" id="edit-schedule-days" name="edit-schedule-days"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-schedule-days">Scheduled Days</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input required type="text" id="edit-schedule-time" name="edit-schedule-time"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-schedule-time">Scheduled Time</label>
+                                </div>
+                            </div>
+
+
+                            <!-- Edit Section input -->
+                            <div>
+                                <ul id="editedSectionList my-3">
+                                </ul>
+                                <div class="d-flex">
+                                    <div class="form-outline mb-4">
+                                        <input type="number" id="edit-section-number"
+                                            class="form-control edit-section-number" />
+                                        <label class="form-label" for="edit-section-number">Edit Section Number</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="editCourseSectionError" class="modal-message">
+                                <p class="r-red-font">
+                                    The section number you entered already exists for this course!
+                                </p>
+                            </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="edit-tab-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+                        <h3 class="fw-bold"> Edit Section: </h3>
+
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3 my-3">
+                                <p class="fw-bold mb-1" id="edit-modal-course-number-t2"></p>
+                                <p class="fw-bold mb-1" id="edit-section-number-t2-p"></p>
+                            </div>
+                        </div>
+
+                        <form>
+                            <!-- Edit Schedule Days And Time -->
+                            <div class="d-flex justify-content-between r-gap-1" >
+                                <div class="form-outline mb-4">
+                                    <input required type="text" id="edit-schedule-days-t2" name="edit-schedule-days-t2"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-schedule-days-t2">Scheduled Days</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input required type="text" id="edit-schedule-time-t2" name="edit-schedule-time-t2"
+                                        class="form-control" />
+                                    <label class="form-label" for="edit-schedule-time-t2">Scheduled Time</label>
+                                </div>
+                            </div>
+
+                            <!-- Edit Section input -->
+                            <div>
+                                <ul id="editedSectionList my-3">
+                                </ul>
+                                <div class="d-flex">
+                                    <div class="form-outline mb-4">
+                                        <input type="number" id="edit-section-number-t2"
+                                            class="form-control edit-section-number-t2" />
+                                        <label class="form-label" for="edit-section-number-t2">Edit Section
+                                            Number</label>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!-- Tabs content -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" data-mdb-dismiss="modal">Cancel</button>
+                <button onclick="editCourseAndSection(event)" data-course-id="{{.courseID}}"
+                    data-section-id="{{.sectionID}}" value="" class="mgmt-btn-gray modalEditBtn"
+                    id="edit-course-and-section-btn">Save
+                    Changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->

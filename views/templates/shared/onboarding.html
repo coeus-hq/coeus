@@ -1,0 +1,201 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Coeus | Admin</title>
+    <link rel="icon" href="/static/images/coeus-favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/management-styles.css" />
+    <script type="module" defer src="/static/js/coeus-management.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="" class="onboarding-content-wrapper">
+            <img class="" src="/static/images/coeus-logo-login.png" alt="Coeus Logo" />
+
+            <form id="create-admin-account">
+
+                <h1 class="onboarding-header my-5">Welcome, admin</h1>
+
+                <p class="admin-welcome-message">
+                    As admin for your organization, you will need to register Coeus into
+                    <br>
+                    your system and personalize it to
+                    your liking. Please follow the steps
+                    <br>
+                    below.
+                </p>
+
+                <section class="onboarding-section-wrapper">
+                    <h2 class="onboarding-section-header mb-3">1. Create an account</h2>
+                    <div class="onboarding-input-wrapper">
+                        <input name="firstName" type="text" class="onboarding-input form-control sign-in-form-control"
+                            placeholder="First Name">
+                        <input name="lastName" type="text" class="onboarding-input form-control sign-in-form-control"
+                            placeholder="Last Name">
+                    </div>
+                    <input name="email" type="email" class="onboarding-input form-control sign-in-form-control"
+                        placeholder="Email">
+                    <input name="password" type="password" class="onboarding-input form-control sign-in-form-control"
+                        placeholder="Password">
+                    <input name="confirmPassword" type="password"
+                        class="onboarding-input form-control sign-in-form-control" placeholder="Confirm Password">
+                </section>
+
+                <button onclick="createAdminAccount(event)" id="submit-admin-account" type="submit"
+                    class="coues-gradient-btn btn btn-primary organization-settings-save-btn d-block">
+                    Create admin account
+                </button>
+
+                <div>
+                    <p id="admin-form-error-message" class="error-message alert alert-danger" role="alert">
+                        Please fill out all fields!
+                    </p>
+                </div>
+
+                <div>
+                    <p id="admin-account-error-message" class="error-message alert alert-danger" role="alert">
+                        Error creating admin account!
+                    </p>
+                </div>
+
+            </form>
+
+            <form id="onboarding-form" enctype="multipart/form-data" class=" flex-column">
+                <div class="d-flex  justify-content-evenly organization-settings-controls r-gap-3 flex-column">
+
+                    <h1 id="create-account-success-header" class="onboarding-header my-5"></h1>
+
+                    <p class="admin-welcome-message">
+                        Please follow the steps below to finish onboarding your organization.
+                    </p>
+
+
+                    <section class="onboarding-section-wrapper">
+                        <h2 class="onboarding-section-header mb-3">2. Set organization name</h2>
+
+                        <input id="onboarding-organization-name" name="onboarding-organization-name" type="text"
+                            class="onboarding-input form-control sign-in-form-control"
+                            placeholder="E.g University of Minnesota - Twin Cities">
+                    </section>
+
+                    <section class="onboarding-section-wrapper">
+                        <h2 class="onboarding-section-header mb-3">
+                            3. Select a default organization time zone</h2>
+
+                        <select class="onboarding-dropdown form-select" name="onboarding-organization-timezone"
+                            id="onboarding-organization-timezone">
+                            <option value="" disabled selected>Select a timezone</option>
+                            <option value="-480">PST (UTC-8)</option>
+                            <option value="-420">MST (UTC-7)</option>
+                            <option value="-420">MDT (UTC-6)</option>
+                            <option value="-360">CST (UTC-6)</option>
+                            <option value="-300">CDT (UTC-5)</option>
+                            <option value="-300">EST (UTC-5)</option>
+                            <option value="-240">EDT (UTC-4)</option>
+                            <option value="0">UTC</option>
+                            <option value="60">CET (UTC+1)</option>
+                            <option value="120">EET (UTC+2)</option>
+                            <option value="330">IST (UTC+5:30)</option>
+                        </select>
+                    </section>
+
+                    <section class="onboarding-section-wrapper">
+                        <h2 class="onboarding-section-header mb-3">
+                            4. Upload organization logo
+                        </h2>
+
+                        <div id="upload-logo-input-container" class="mb-3">
+                            <input onchange="logoInputChange(event)" id="upload-logo-input" name="upload-logo-input"
+                                class="onboarding-file-input form-control" type="file" accept="image/*">
+                        </div>
+
+                        <div id="logo-display" style="display: none;">
+                            <img class="logo-preview" src="">
+                            <p class="logo-success-message">Image uploaded successfully </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <section class="onboarding-section-wrapper mb-4">
+
+                    <h2 class="onboarding-section-header mb-3">
+                        Optional add-ons
+                    </h2>
+
+                    <div class="onboarding-checkbox-label-wrapper">
+                        <input onchange="toggleAPIKeyInput()" class="onboarding-checkbox form-check-input"
+                            type="checkbox" value="" id="toggleAPIKey" />
+                        <label class="onboarding-checkbox-label form-check-label" for="toggleAPIKey">Add SendGrid
+                            API
+                        </label>
+                    </div>
+
+                    <p class="api-key-helper-info" onclick="toggleAPIKeyInfo()">What is this?</p>
+
+                    <p id="api-key-helper-info-hidden" class="api-key-helper-info">
+                        SendGrid API is a tool that allows you to send emails directly from Coeus. Features like email
+                        resetIn order to add a SendGrid API, you need to create a SendGrid account and generate an API
+                        Key.
+                    </p>
+
+                    <div class="form-outline invisible" id="apiKeyInput">
+                        <input type="text" placeholder="Enter SendGrid API code" id="apiKey"
+                            class="onboarding-input form-control" />
+
+                        <input type="email" placeholder="Email Associated With SendGrid" id="sendGridEmail"
+                            class="onboarding-input form-control mt-3" />
+                    </div>
+                </section>
+
+
+                <button onclick="submitOnboarding(event)" id="submit-onboarding" type="submit"
+                    class="coues-gradient-btn btn btn-primary organization-settings-save-btn">
+                    Finish onboarding
+                </button>
+
+                <div>
+                    <p id="onboarding-form-error-message" class="error-message alert alert-danger" role="alert">
+                        Please fill out all fields!
+                    </p>
+                </div>
+
+        </div>
+        </form>
+
+        <div id="settingsSavedSuccess" class="toast settings-saved-toast">
+            <div class="toast-body">
+                Settings saved successfully!
+            </div>
+        </div>
+        <div id="settingsSavedFail" class="toast settings-failed-toast">
+            <div class="toast-body">
+                Error saving settings!
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 r-bg-D9">
+        <div class="container d-flex justify-content-evenly">
+
+            <div class="d-flex r-gap-0-5" >
+                <a class="footer-link" href="">Terms & Conditions</a>
+                <div class="align-self-center">|</div>
+                <a class="footer-link" href="">System Status</a>
+                <div class="align-self-center">|</div>
+                <a class="footer-link" href="">Privacy Policy</a>
+            </div>
+
+            <img class="" src="/static/images/coeus-logo-login.png" alt="Coeus Logo" />
+
+        </div>
+    </footer>

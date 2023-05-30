@@ -1,0 +1,234 @@
+<!-- Add User Modal -->
+<div class="modal fade" id="add-user-modal" tabindex="-1" aria-labelledby="addUserModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="badge badge-primary">
+                    <img src="/static/images/icon-user-email.svg" alt="">
+                </span>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="add-new-h3">
+                <h3 class="fw-bold"> Add new user </h3>
+                </div>
+
+                <!-- First Name input -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="addUserFirstName" class="form-control" />
+                    <label class="form-label" for="addUserFirstName">First Name</label>
+                </div>
+
+                <!-- Last Name input -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="addUserLastName" class="form-control" />
+                    <label class="form-label" for="addUserLastName">Last Name</label>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input type="email" id="addUserEmail" class="form-control" />
+                    <label class="form-label" for="addUserEmail">Email address</label>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <input type="password" id="addUserPassword" class="form-control" />
+                    <label class="form-label" for="addUserPassword">Password</label>
+                </div>
+
+                <!-- Confirm password input -->
+                <div class="form-outline mb-4">
+                    <input type="password" id="addUserPasswordConfirm" class="form-control" />
+                    <label class="form-label" for="addUserPasswordConfirm">Confirm Password</label>
+                </div>
+
+                <!-- Moderator Type -->
+                <select id="addModeratorSelect" class="form-select moderator-select">
+                    <option value="" disabled selected>Moderator Type</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="teacher assistant">Teacher Assistant</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="student">Student</option>
+                </select>
+
+                <div id="addUserPasswordError" class="modal-message">
+                    <p class="r-red-font">
+                        Passwords do not match!
+                    </p>
+                </div>
+                <div id="addUserFormFillError" class="modal-message">
+                    <p class="r-red-font">
+                        Please fill out all fields!
+                    </p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" data-mdb-dismiss="modal">Cancel</button>
+                <button onclick="addUser(event)" value="" type="button" class="mgmt-btn-gray" id="addUserButton">Add User</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add User Modal -->
+
+
+<!-- Confirm Delete User Modal -->
+<div class="modal fade" id="delete-user-modal" tabindex="-1" aria-labelledby="delete-user-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <span class="badge badge-danger">
+                    <img src="../static/images/icon-trash-large-red.svg" alt="">
+                </span>
+
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="fw-bold"> Do you want to delete user?</h3>
+                <div class="d-flex align-items-center">
+                    <div class="ms-3 my-5">
+                        <p id="deleteModalName" class="fw-bold mb-1"></p>
+                        <p id="deleteModalEmail" class="text-muted mb-0"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" data-mdb-dismiss="modal">Cancel</button>
+                <button type="button" class="mgmt-btn-delete modalDeleteBtn" id="modalDeleteBtn"
+                    onclick="deleteUser()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Confirm Delete User Modal -->
+
+
+<!-- Send Email Modal -->
+<div class="modal fade" id="email-modal" tabindex="-1" aria-labelledby="email-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="badge badge-primary">
+                    <img src="../static/images/icon-email.svg" alt="">
+                </span>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="fw-bold"> Send an email invite to instructor?</h3>
+                <div class="d-flex align-items-center">
+                    <div class="ms-3 my-5">
+                        <p class="fw-bold mb-1">John Doe</p>
+                        <p class="text-muted mb-0">john.doe@gmail.com</p>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                    <label class="form-check-label" for="flexCheckDefault">Don't ask again</label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
+                <button value="" type="button" class="btn btn-primary" id="confirmSendEmailButton">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Send Email Modal -->
+
+<!-- Edit Modal -->
+<div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="badge badge-primary">
+                    <img src="../static/images/icon-edit.svg" alt="">
+                </span>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="edit-user-h3 fw-bold"> Edit user </h3>
+
+                <div class="d-flex align-items-center">
+
+                    <div class="edit-user-h4 my-5">
+                        <p class="fw-bold mb-1" id="editModalUserName"></p>
+                        <p class="text-muted mb-0" id="editModalEmail"></p>
+                    </div>
+                </div>
+
+                <form>
+                    <!-- First Name input -->
+                    <div class="form-outline mb-4">
+                        <input name="first-name" type="text" id="editUserFirstName" class="form-control" />
+                        <label class="form-label" for="editUserFirstName">First Name</label>
+                    </div>
+
+                    <!-- Last Name input -->
+                    <div class="form-outline mb-4">
+                        <input name="last-name" type="text" id="editUserLastName" class="form-control" />
+                        <label class="form-label" for="editUserLastName">Last Name</label>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input name="email" type="email" id="editUserEmail" class="form-control" />
+                        <label class="form-label" for="editUserEmail">Email address</label>
+                    </div>
+
+                    <!-- Set new password input -->
+                    <div class="form-outline mb-4">
+                        <input name="password" type="text" id="editUserPassword" class="form-control" />
+                        <label class="form-label" for="form7Example3">Set new password (Optional)</label>
+                    </div>
+
+                    <!-- Confirm new password input -->
+                    <div class="form-outline mb-4">
+                        <input name="confirm-password" type="text" id="editUserPasswordConfirm" class="form-control" />
+                        <label class="form-label" for="form7Example4">Confirm new password</label>
+                    </div>
+
+                    <!-- Select moderator status -->
+                    <select id="moderatorSelect" class="moderator-form-select form-select moderator-select">
+                        <option value="" disabled selected>Moderator Type</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="teacher assistant">Teacher Assistant</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="student">Make Student</option>
+                    </select>
+
+                    <div id="editUserPasswordError" class="modal-message">
+                        <p class="r-red-font">
+                            Passwords do not match!
+                        </p>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" data-mdb-dismiss="modal">Cancel</button>
+                <button onclick="updateUserModal(event)" value="" class="mgmt-btn-gray modalEditBtn"
+                    id="updateUserModalButton">Save
+                    Changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+
+<!-- Small Screen Modal -->
+<div class="modal fade" id="screen-size-alert-modal" tabindex="-1" aria-labelledby="screen-size-alert-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           
+            <div class="modal-body">
+                <p class="fw-bold"> This panel is designed for desktop screens only. Please use a desktop computer to view this page.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">OK</button>
+        </div>
+    </div>
+</div>
+<!-- Small Screen Modal -->

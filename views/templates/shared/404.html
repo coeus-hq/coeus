@@ -1,0 +1,40 @@
+{{if .isAdmin}}
+{{ template "nav.html" . }}
+{{else}}
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+{{end}}
+
+<main class="container my-5 pb1000">
+  <section class="row">
+    <div class="col-md-8 offset-md-2 text-center">
+      <h1 class="text-danger">404</h1>
+      {{if .isAdmin}}
+
+      <div class="four-h3">
+        <h2>Oops! The page you are looking for cannot be found, or you do not have access as an admin.</h2>
+      </div>
+      <div class="four-p">
+        <p>Please check the URL or click the button below to go back to the admin page.</p>
+      </div>
+      <a href="/admin" class="four-btn btn mt-3 ">Go to admin page</a>
+      {{else}}
+      <div class="four-h3">
+        <h2>Oops! The page you are looking for cannot be found.</h2>
+      </div>
+      <div class="four-p">
+        <p>Please check the URL or click the button below to go back to the homepage.</p>
+      </div>
+      <a href="/" class="back-to-home-btn">Back to home</a>
+      {{end}}
+    </div>
+
+    <hr style="margin-top: 4rem;">
+
+    <p style="margin-top: 4rem;">For soft launch: Cookies may have not been deleted correct switching between accounts,
+      try logging out.</p>
+
+    <a class="settings-btn" href="/logout">Log out</a>
+
+  </section>
+</main>

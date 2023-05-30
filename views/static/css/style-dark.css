@@ -1,0 +1,242 @@
+:root {
+  --primary-color: #f5f5f5;
+  --secondary-color: #444;
+  --background-color: #1a1a1a;
+  --secondary-background-color: #666666;
+  --coeus-blue: #00008B;
+  --button-light-coeus-blue: #3535ba;
+  --row-instructor-bg: rgb(26, 103, 129);
+  --row-not-in-session-bg: rgb(100, 100, 100);
+  --row-in-session-bg: rgb(66, 122, 66);
+  --input-background-color: #f0f0f0;
+  --input-text-color: #333;
+}
+
+/* GLOBAL STYLES START */
+* {
+  color: var(--primary-color) !important;
+}
+
+body {
+  background-color: var(--background-color) !important;
+}
+
+nav {
+  background-color: var(--background-color) !important;
+}
+
+p {
+  color: var(--primary-color) !important;
+}
+
+/* GLOBAL STYLES END */
+
+/* *********************************************************** */
+
+/* NEW CLASSES/OVERRIDE START */
+.dark-form-check-input {
+  background-color: var(--secondary-background-color) !important;
+}
+
+.signup-secondary-btn {
+  background-color: var(--button-light-coeus-blue) !important;
+  border-color: var(--button-light-coeus-blue);
+}
+
+.my-bg-white {
+  background-color: none;
+}
+
+.btn.coeus-blue {
+  background-color: var(--coeus-blue) !important;
+}
+
+/* NEW CLASSES/OVERRIDE END */
+
+/* *********************************************************** */
+
+/* NAV STYLES START */
+.dropdown-menu {
+  background-color: var(--secondary-background-color) !important;
+}
+
+.dropdown-menu:hover {
+  background-color: var(--secondary-background-color) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--secondary-background-color) !important;
+}
+
+/* NAV STYLES END */
+
+/* *********************************************************** */
+
+/* CLASS SESSION STYLES START */
+.dark-card-body {
+  border-radius: 7px 7px 0 0;
+  background-color: var(--secondary-background-color) !important;
+}
+
+.dark-card-text,
+.dark-card-text strong {
+  background-color: inherit !important;
+}
+
+.session-tab,
+.search-course-card .list-group,
+.list-group-item,
+#chatbox {
+  background-color: var(--background-color) !important;
+}
+
+.section-row:hover {
+  background-color: var(--background-color) !important;
+}
+
+.question-card-time,
+.dark-card-footer,
+.participant-count-wrapper,
+.participant-count-wrapper img,
+.participant-count-wrapper p,
+.dark-card-footer .vote-up-btn,
+.dark-card-footer .vote-up-btn img,
+.dark-card-footer .vote-up-btn p,
+.dark-card-footer div,
+.dark-card-footer div span,
+.dark-textarea-border,
+.dark-textarea-border div,
+.dark-textarea-border div textarea,
+.dark-textarea-border div label,
+.dark-textarea-border div span,
+.alert-info,
+.textarea-border {
+  background-color: var(--secondary-background-color) !important;
+}
+
+.dark-textarea-border div textarea {
+  padding: 15px;
+}
+
+.dark-card-footer {
+  border-top: none !important;
+}
+
+.participant-count-wrapper {
+  border-radius: 7px;
+  padding: 4px;
+}
+
+/* CLASS SESSION STYLES END */
+
+/* *********************************************************** */
+
+/* MY COURSE STYLES START */
+.my-course-not-in-session,
+.my-course-not-in-session button,
+.my-course-not-in-session div,
+.my-course-not-in-session div p,
+.my-course-not-in-session div h5,
+.my-course-not-in-session div img {
+  background-color: var(--row-not-in-session-bg) !important;
+}
+
+.my-course-in-session,
+.my-course-in-session button,
+.my-course-in-session div,
+.my-course-in-session div p,
+.my-course-in-session div h5,
+.my-course-in-session div img {
+  background-color: var(--row-in-session-bg) !important;
+}
+
+.my-course-instructor,
+.my-course-instructor button,
+.my-course-instructor div,
+.my-course-instructor div p,
+.my-course-instructor div h5,
+.my-course-instructor div img {
+  background-color: var(--row-instructor-bg) !important;
+}
+
+.trash-icon {
+  display: none !important;
+}
+
+.dark-theme-trash-icon {
+  display: block !important;
+}
+
+.modal-dialog,
+.modal-content,
+.modal-header,
+.modal-header h5,
+.modal-body,
+.modal-footer {
+  background-color: var(--secondary-background-color) !important;
+}
+
+.modal-header {
+  border-bottom: none !important;
+}
+
+.modal-footer {
+  border-top: none !important;
+}
+
+/* MY COURSE STYLES END */
+
+/* *********************************************************** */
+
+/* COURSE SECTION STYLES START */
+div .enrolled-section,
+div .enrolled-section div,
+div .enrolled-section p,
+div .enrolled-section input {
+  background-color: var(--row-not-in-session-bg) !important;
+}
+
+div .section-row {
+  background-color: inherit;
+}
+
+.enrolled-section:hover {
+  background-color: var(--secondary-background-color) !important;
+}
+
+/* COURSE SECTION STYLES END */
+
+/* *********************************************************** */
+
+/* COURSE SEARCH START */
+.search-course-card {
+  background-color: var(--background-color) !important;
+}
+
+/* COURSE SEARCH END */
+
+/* *********************************************************** */
+
+/* SETTINGS STYLES START */
+#settings-form,
+.form-select {
+  background-color: var(--background-color) !important;
+}
+
+/* SETTINGS STYLES END */
+
+/* *********************************************************** */
+
+/* MY COURSES START */
+
+.my-course-card-active-false {
+  background-color: var(--background-color) !important;
+}
+
+.my-course-card-button-active-true{
+  background: var(--background-color) !important;
+}
+
+.dropdown-circle {
+  background-color: var(--secondary-background-color) !important;
+}

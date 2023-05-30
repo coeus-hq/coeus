@@ -1,0 +1,170 @@
+{{ template "nav.html" . }}
+
+<div class="container">
+    <div id="" class="page-content-wrapper ">
+        <h2 class="my-5">Settings</h2>
+
+        <form id="settings-form" class="d-flex flex-column" enctype="multipart/form-data"
+            onsubmit="event.preventDefault(); submitOrgSettingsForm();">
+
+            <div class="d-flex  justify-content-evenly organization-settings-controls">
+
+                <section class="onboarding-section-wrapper">
+                    <h2 class="onboarding-section-header mb-3">
+                        Update organization time zone
+                    </h2>
+
+                    <select class="onboarding-dropdown form-select" name="time-zone-select" id="time-zone-select">
+                        <option value="" disabled selected>Select a timezone</option>
+                        <option value="-480">PST (UTC-8)</option>
+                        <option value="-420">MST (UTC-7)</option>
+                        <option value="-420">MDT (UTC-6)</option>
+                        <option value="-360">CST (UTC-6)</option>
+                        <option value="-300">CDT (UTC-5)</option>
+                        <option value="-300">EST (UTC-5)</option>
+                        <option value="-240">EDT (UTC-4)</option>
+                        <option value="0">UTC</option>
+                        <option value="60">CET (UTC+1)</option>
+                        <option value="120">EET (UTC+2)</option>
+                        <option value="330">IST (UTC+5:30)</option>
+                    </select>
+                </section>
+
+                <section class="onboarding-section-wrapper">
+                    <h2 class="onboarding-section-header mb-3">
+                        Change organization logo
+                    </h2>
+
+                    <div id="upload-logo-input-container" class="mb-3">
+                        <input type="file" id="upload-logo-input" name="upload-logo-input"
+                            onchange="onUploadLogoInputChange()" class="onboarding-file-input form-control"
+                            accept="image/*">
+                    </div>
+
+                    <div id="logo-display" style="display: none;">
+                        <img class="logo-preview" src="">
+                        <p class="logo-success-message">Image uploaded successfully </p>
+                    </div>
+
+                    <button type="button" id="delete-logo-btn" class="btn btn-danger mt-3 w-25"
+                        onclick="onDeleteLogoButtonClick()">Delete</button>
+                </section>
+            </div>
+
+            <section class="onboarding-section-wrapper mb-4 m-auto">
+
+                <h2 class="onboarding-section-header mb-3">
+                    Add SendGrid API Key (Optional)
+                </h2>
+
+                <div>
+                    <input name="org-settings-sendgrid-api-key" type="text" placeholder="Enter SendGrid API code"
+                        id="apiKey" class="org-setting-input onboarding-input form-control" />
+
+                    <input name="org-settings-sendgrid-email" type="email" placeholder="Email Associated With SendGrid"
+                        id="sendGridEmail" class="org-setting-input onboarding-input form-control mt-3" />
+                </div>
+            </section>
+
+            <button type="submit" class="coeus-gradient-btn organization-settings-save-btn">
+                Save Settings
+            </button>
+
+
+        </form>
+
+        <section class="db-options">
+            <h2 class="onboarding-section-header ">
+                Database options
+            </h2>
+
+            <div class="d-flex r-gap-1">
+                <button data-mdb-toggle="modal" data-mdb-target="#reset-database-modal" id="reset-db-btn">
+                    Reset Database
+                </button>
+
+                <button data-mdb-toggle="modal" data-mdb-target="#seed-database-modal" id="seed-db-btn">
+                    Seed Database
+                </button>
+            </div>
+
+        </section>
+        <hr class="my-5">
+
+        <a class="coeus-gradient-btn-link organization-settings-save-btn " href="/logout">Log out</a>
+
+    </div>
+
+    <div id="settingsSavedSuccess" class="toast settings-saved-toast">
+        <div class="toast-body">
+            Settings saved successfully!
+        </div>
+    </div>
+    <div id="settingsSavedFail" class="toast settings-failed-toast">
+        <div class="toast-body">
+            Error saving settings!
+        </div>
+    </div>
+
+    <div id="successToast" class="toast settings-saved-toast">
+        <div class="toast-body">
+
+        </div>
+    </div>
+
+    <div id="failToast" class="toast settings-saved-toast">
+        <div class="toast-body">
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Reset database confirm modal -->
+<div class="modal fade" id="reset-database-modal" tabindex="-1" aria-labelledby="reset-database-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content margin-top-30">
+
+            <div class="modal-body delete-modal-body">
+                <p class="reset-modal-font-primary" id="reset-database-modal-label">
+                    Are you sure you reset the database?
+                    <br>
+                    This action will redirect you to the onboarding page.
+                </p>
+            </div>
+
+            <div class="m-auto">
+                <button onclick="databaseReset()" type="button" class="reset-database-modal-button"
+                    id="confirmResetButton" data-mdb-dismiss="modal">Reset</button>
+                <p class="cancel-modal-button" data-mdb-dismiss="modal">Cancel</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Seed database confirm modal -->
+<div class="modal fade" id="seed-database-modal" tabindex="-1" aria-labelledby="seed-database-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content margin-top-30">
+
+            <div class="modal-body delete-modal-body">
+                <p class="seed-modal-font-primary" id="seed-database-modal-label">
+                    Seeding the database will delete all existing data and replace it with the default data.
+                    <br>
+                    With the exception of the admin account and organization.
+                
+                </p>
+            </div>
+
+            <div class="m-auto">
+                <button onclick="databaseSeed()" type="button" class="seed-database-modal-button" id="confirmSeedButton"
+                    data-mdb-dismiss="modal">Seed</button>
+                <p class="cancel-modal-button" data-mdb-dismiss="modal">Cancel</p>
+            </div>
+
+        </div>
+    </div>
+</div>

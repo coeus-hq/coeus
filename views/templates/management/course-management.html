@@ -1,0 +1,71 @@
+{{ template "nav.html" . }}
+
+<div class="container">
+    <div id="" class="page-content-wrapper ">
+        <div class="d-flex justify-content-between my-5 flex-wrap">
+            <div class="d-flex align-items-center">
+                <h2 class="mgmt-h2 me-3">Course Management</h2>
+                <span class="badge badge-primary p-2 me-3 height-f-c">
+                    {{.courseCount}} Courses
+                </span>
+                <span class="badge badge-primary p-2 me-3 height-f-c">
+                    {{.sectionCount}} Sections
+                </span>
+
+                <div class="">
+                    <select id="rowSelect" class="form-select select row-select" onchange="onRowSelectChange()">
+                        <option value="" disabled selected>Rows</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="{{.sectionCount}}">All</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="form-outline w-auto me-3 height-f-c">
+                        <div class="form-group">
+                          <input oninput="searchUser()" type="text" id="searchInput" class="form-control" placeholder="Course number or title" />
+                          <img src="/static/images/icon-search.png" alt="search icon">
+                        </div>
+                      </div>  
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="item">
+              <nav aria-label="Page navigation example">
+                <ul id="pagination" class="pagination my-3">
+                </ul>
+              </nav>
+              <button class="mgmt-btn-gray me-3 height-f-c" data-mdb-toggle="modal"
+                data-mdb-target="#add-course-modal">Add Course</button>
+            </div>
+          </div>
+          
+
+
+        <table id="dataTable" class="w-100 table  table-striped table-hover">
+            <thead class="mgmt-table bg-light">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Semester</th>
+                    <th>Start / End Date</th>
+                    <th>Section</th>
+                    <th>Schedule</th>
+                    <th>Enroll Count</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody" class="">
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+{{ template "course-modals.html" . }}

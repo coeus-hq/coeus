@@ -1,0 +1,8 @@
+build: coeus
+
+coeus:
+	@echo "Building for macOS"
+	go build -o coeus-bin ../main.go
+
+clean:
+	@rm -rf ./coeus-bin

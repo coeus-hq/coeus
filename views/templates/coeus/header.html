@@ -1,0 +1,55 @@
+{{/*
+* Copyright (C) 2023 Coeus
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License version 3 as published by
+* the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see <https: //www.gnu.org/licenses/agpl-3.0.txt>.
+  */}}
+
+  <!DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coeus Education</title>
+    <link rel="icon" href="/static/images/coeus-favicon.svg">
+
+    <!-- DARK THEME CSS -->
+    {{if .cssStyle}}
+    <link rel="stylesheet" href="/static/css/style-dark.css">
+    {{end}}
+    <!-- DARK THEME CSS -->
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap"
+      rel="stylesheet">
+    <!-- GOOGLE FONTS -->
+
+    <!-- BOOTSTRAP 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- BOOTSTRAP 5 CDN -->
+
+    <!-- MDB JAVASCRIPT CDN -- Compatable with Bootstrap 5, we first built Coeus using MD Bootstrap -->
+    <script defer type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+    <!-- MDB JAVASCRIPT CDN -->
+
+    <link rel="stylesheet" href="/static/css/global.css">
+    <script type="module" defer src="/static/js/coeus.js"></script>
+
+  </head>
+
+  <body>

@@ -1,0 +1,225 @@
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+<div id="my-courses-section" class="my-courses-wrapper">
+    <div class="">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="my-courses-header">My courses</h2>
+            <a type="submit" href="/course-search" id="add-course-circle-btn">
+                <img src="../../static/images/icon-plus-add-course.svg" alt="Add course icon.">
+            </a>
+        </div>
+        {{if .courses }}
+        {{if not .isInstructor}}
+        <p id="edit-my-courses" onclick="toggleTrashCourse()">Edit courses</p>
+        {{end}}
+        {{end}}
+    </div>
+
+    <section class="is-fullwidth">
+
+        <!-- If no courses than display a message -->
+        {{if not (len .courses) }}
+        {{if not .isInstructor}}
+
+        <div class="d-flex flex-column justify-content-center align-items-center my-5">
+            <h4 class="mc-add-course-helper">
+                No courses yet, would you
+                <br>
+                like to add a course?
+            </h4>
+            <a href="/course-search" class="mc-add-course-btn">Add Course</a>
+        </div>
+
+        {{else}}
+
+        <div class="d-flex flex-column justify-content-center align-items-center my-5">
+            <h4 class="mc-add-course-helper">You currently have no courses, would you
+                <br>
+                like to create a course?
+            </h4>
+            <a href="/instructor" class="mc-create-a-course-link">Create a Course</a>
+        </div>
+
+        {{end}}
+        {{end}}
+
+        {{range .courses}}
+        <div class="card-row-trash-wrapper">
+
+            {{if eq .moderatorType "instructor"}}
+
+            <div onclick="courseRowClick(this); getAllModerators(this)"  class="my-course-card-instructor course-row" data-sectionid="{{.sectionID}}">
+
+                <div class="my-course-card-body">
+                    <div class="my-course-card-header-wrapper">
+                        <p class="my-course-card-primary-font-instructor">
+                            {{.number}} : {{.title}}
+                        </p>
+                        <img class="my-course-icon-active-true" src="../../static/images/icon-students-dark.svg"
+                            alt="Students icon">
+                    </div>
+                    <p class="instructor-font">
+                        Instructor
+                    </p>
+
+                    <p class="my-course-card-secondary-font-instructor card-text">
+                        {{.semester}} {{.year}} |
+                        Sect:{{.name}}
+                    </p>
+
+                    <p class="my-course-card-tertiary-font-instructor course-semester">
+                        {{.days}} | {{.timeslot}}
+                    </p>
+
+                    <div class="instructor-start-session-button">
+                        Start live session
+                    </div>
+
+                </div>
+            </div>
+
+
+            {{else}}
+
+            <div class="my-course-card-active-{{.inProgress}} course-row" data-sectionid="{{.sectionID}}">
+
+                <div class="my-course-card-body">
+                    <div class="my-course-card-header-wrapper">
+                        <p class="my-course-card-primary-font-active-{{.inProgress}}">
+                            {{.number}} : {{.title}}
+                        </p>
+                        <img class="my-course-icon-active-{{.inProgress}}" src="../../static/images/icon-students.svg"
+                            alt="Students icon">
+                    </div>
+
+                    <p class="my-course-card-secondary-font-active-{{.inProgress}} card-text">
+                        {{.semester}} {{.year}} |
+                        Sect:{{.name}}
+                    </p>
+
+                    <p class="my-course-card-tertiary-font-active-{{.inProgress}} course-semester">
+                        {{.days}} | {{.timeslot}}
+                    </p>
+
+                    <a onclick="getAttendanceID(this)" class="my-course-card-button-active-{{.inProgress}}"
+                        data-sectionid="{{.sectionID}}" href="/class-session/{{.sectionID}}/{{.classSessionID}}">
+                        Join live session
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="my-course-card-trash-hidden my-course-card-trash">
+                <img data-mdb-toggle="modal" data-mdb-target="#delete-course-modal-{{.sectionID}}"
+                    data-sectionid="{{.sectionID}}" src="../../static/images/icon-trash.svg" alt="">
+            </div>
+        </div>
+        {{end}}
+        {{end}}
+
+    </section>
+</div>
+
+
+{{range .courses}}
+
+
+<div id="enter-live-session-{{.sectionID}}" class="enter-live-session my-courses-wrapper">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="breadcrumb-font" href="/">My Courses</a></li>
+            <li class="breadcrumb-item active breadcrumb-font" aria-current="page">Join Session</li>
+        </ol>
+    </nav>
+    <div class="content">
+
+        <p class="course-info-font">
+            {{.number}}:{{.title}}
+        </p>
+
+    </div>
+    <h2 class="enter-session-font">Enter Live Session</h2>
+    {{if or (eq .moderatorType "instructor") (eq .moderatorType "teacher assistant")}}
+
+    {{end}}
+
+    <div>
+
+        <!-- Instructor can add another moderator to the section, and the moderator type defaults to teacher assistant-->
+        {{if or (eq .moderatorType "instructor") }}
+        <div class="field">
+            <div class="add-mod-wrapper">
+
+                <section class="w-100">
+                    <p class="chat-mod-font-primary">Chat Moderators: </p>
+
+                    <ul id="chat-moderator-list-{{.sectionID}}"
+                        class="mod-list-overflow list-group list-group-light list-group-numbered ">
+                    </ul>
+                </section>
+
+                <div class="form-outline add-mod-form">
+                    <p class="add-chat-mod-label">Add chat
+                        moderators:</p>
+                    <div class="form-outline {{ if eq .cssStyle " style-dark"}} form-white {{end}}">
+                        <input type="text" id="add-moderator-{{.sectionID}}"
+                            class="form-control add-mod-input add-moderator-input" placeholder="Moderator's Email" />
+
+                    </div>
+                    <!-- add-moderator-input -->
+
+                    <button id="add-moderator-button" class="add-mod-btn" value="{{.sectionID}}"
+                        onclick="addModeratorClick(this)">
+                        Add
+                    </button>
+                </div>
+
+            </div>
+            <p class="add-moderator-success-message" id="add-moderator-success-message-{{.sectionID}}">
+                Moderator
+                Added.</p>
+            <p class="add-moderator-fail-message" id="add-moderator-error-message-{{.sectionID}}">Moderator
+                Not
+                Added.</p>
+            <p class="add-moderator-error-message" id="add-moderator-form-error-message-{{.sectionID}}">Please add an
+                email!</p>
+        </div>
+        <hr class="my-5">
+        <button value="{{.sectionID}}" id="start-session-button"
+            class="  start-session-button coeus-gradient-btn-instructor"
+            onclick="startSessionClick(this, '{{.classSessionID}}', '{{.sectionID}}')">
+            Start Session
+        </button>
+        {{end}}
+    </div>
+</div>
+
+
+<!-- Delete Course Modal -->
+<div class="modal fade delete-bootstrap-modal-override" id="delete-course-modal-{{.sectionID}}" tabindex="-1" aria-labelledby="deleteCourseModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content margin-top-30">
+            <div class="modal-body delete-modal-body ">
+                <p class="delete-modal-primary-font" id="deleteCourseModalLabel">
+                    Are you sure you
+                    <br>
+                    want to delete this course?
+                </p>
+
+                <p class="delete-modal-secondary-font">
+
+                </p>
+                <p class="delete-modal-tertiary-font">
+
+                </p>
+            </div>
+            <div class="delete-course-modal-button-wrap">
+                <button onclick="deleteButtonClick(this)" value="{{.sectionID}}" type="button"
+                    class="delete-modal-button" id="confirmDeleteButton">Delete course</button>
+                <p class="cancel-modal-button" data-mdb-dismiss="modal">Cancel</p>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

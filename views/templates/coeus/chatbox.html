@@ -1,0 +1,27 @@
+<form id="chatbox" class="box has-background-light my-bg-white" onsubmit="preventEmptyQuestion(event)">
+    
+    <div class="textarea-border">
+        <div class="form-outline p-1 ">
+            <input type="hidden" id="classSessionID" value="{{.classSessionIDInt}}" />
+            <textarea style="resize: none;" name="questionText" id="questionTextarea" placeholder="Type your question here..." oninput="limitTextarea(this, 140)" class="form-control bg-lightgray" rows="4" maxlength="140"></textarea>
+            <span id="charCount">0/140</span>
+          </div>
+    </div>
+
+    <div class="field is-grouped is-grouped-right">
+        <span id="question-posted-message">
+            Question Posted
+        </span>
+        <span id="question-not-posted-message">
+            Question Not Posted
+        </span>
+        <span id="enter-a-question">
+            Please Enter A Question
+        </span>
+
+        <div class="control chat-btn-wrapper">
+            <p onclick="hideChat()" type="button" id="hide-chat-btn" class="hide-chat-btn">Hide</p>
+            <button type="submit" id="post-question" class="send-chat-btn">Send</button>
+        </div>
+    </div>
+</form>

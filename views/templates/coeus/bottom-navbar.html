@@ -1,0 +1,24 @@
+{{if not .classSessionIDInt}}
+<nav id="bottom-navbar" class="navbar bottom-navbar" role="navigation" aria-label="main navigation">
+  <div class="container border-right-2">
+    <div id="navbarBasicExample" class="bottom-nav-items-wrapper">
+      <a class=" bottom-nav-item-wrapper" href="/">
+        <img src="/static/images/icon-book.svg" alt="">
+        <p class="bottom-navbar-text">
+          My Courses
+        </p>
+      </a>
+    </div>
+  </div>
+</nav>
+{{end}}
+
+{{if .classSessionIDInt}}
+{{if ne .moderatorStatus.Type "instructor"}}
+
+<div onclick="showChatbox()" id="ask-a-question-btn" class="ask-a-question-bar">
+  <span class="">Ask a question</span>
+</div>
+
+{{end}}
+{{end}}

@@ -1,0 +1,8 @@
+build: coeus
+
+coeus:
+	@echo "Building for Docker/Linux"
+	go build -ldflags="-extldflags=-static" -tags netgo -tags sqlite_omit_load_extension  -o docker/coeus-bin ../main.go
+
+clean:
+	@rm -rf docker/coeus-bin

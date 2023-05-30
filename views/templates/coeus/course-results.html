@@ -1,0 +1,37 @@
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+<div class="my-courses-wrapper desktop-wrapper">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="breadcrumb-font" href="/">My Courses</a></li>
+            <li class="breadcrumb-item"><a class="breadcrumb-font" href="/course-search">Search Courses</a></li>
+            <li class="breadcrumb-font breadcrumb-item active" aria-current="page">Search Results</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="course-result-header">Course results for "{{.courseIdentifier}}"</h2>
+    </div>
+    {{if len .courses}}
+    <div class="">
+        {{range .courses}}
+        <a href="/course-section/{{.ID}}" class="result-card d-flex justify-content-between align-items-center">
+            <div>
+                 <p class="result-card-title">
+                    {{.Number}} : {{.Title}}
+                 </p>
+                   <br>
+                <p class="result-card-font-secondary">{{.Semester}} {{.Year}}</p>
+            </div>
+            <img src="/static/images/icon-arrow-right.svg" alt="">
+        </a>
+        {{end}}
+    </div>
+
+    {{else}}
+    <div class="d-flex align-items-center flex-column">
+        <p class="my-5 result-card-font-secondary">No courses found.</p>
+        <a href="/course-search" class="cs-course-search-btn-link">Back to search</a>
+    </div>
+
+    {{end}}
+</div>

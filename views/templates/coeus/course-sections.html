@@ -1,0 +1,77 @@
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+<div class="my-courses-wrapper desktop-wrapper">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="breadcrumb-font" href="/">My Courses</a></li>
+            <li class="breadcrumb-item"><a class="breadcrumb-font" href="/course-search">Search Courses</a></li>
+            <li class="breadcrumb-item"><a class="breadcrumb-font" onclick="backButtonClick()"
+                    class="back-to-search-results-link" href="#">Search Results</a></li>
+            <li class="breadcrumb-font breadcrumb-item active" aria-current="page">Add Section</li>
+        </ol>
+    </nav>
+    <div class="result-text-wrapper">
+        <h1 class="section-result-font-primary">{{.course.Number}}:{{.course.Title}}</h1>
+        <p class="section-result-font-secondary">{{.course.Semester}} {{.course.Year}}</p>
+        <p class="section-result-font-tertiary">Sections in course:</p>
+    </div>
+
+    <div class="section-results-wrapper">
+        <form class="course-sections-form overflow-sections" action="/course-section" method="post">
+            {{if len .sections}}
+            {{range .sections}}
+            <div class="section-row result-card  {{if .Enrolled}}enrolled-section is-static{{end}}">
+                <label for="sectionSelect{{.ID}}">
+                    <div class="section-row-wrapper">
+
+                        <p class="result-card-title">{{$.course.Number}}:{{$.course.Title}}</p>
+                        <div class="radio-label-wrapper">
+                            <input id="sectionSelect{{.ID}}" type="radio" name="sectionSelect" value="{{.ID}}" {{if
+                                .Enrolled}}disabled{{else}}class="is-static" {{end}}>
+                            <p class="result-card-font-secondary">
+                                Section: {{.Name}}
+                            </p>
+                            <p class="current-course margin-none-align-self"> {{if .Enrolled}} Enrolled {{end}}</p>
+                            </p>
+                        </div>
+
+                    </div>
+                </label>
+            </div>
+            {{end}}
+
+            {{else}}
+            <p class="my-5">No sections found for this course.</p>
+            <a href="/course-search" class="cs-course-search-btn a-styles-removal">
+                <p class="a-font">Back to search</p>
+                </a>
+            <hr class="my-3">
+
+            {{end}}
+
+            <p id="select-section-alert">
+                Please select a section to add to your course.
+            </p>
+
+            {{if len .sections}}
+            <button id="add-section-button" type="button" class="cs-course-search-btn"
+                onclick="validateSectionForm()">Add Section</button>
+
+            {{else}}
+            <a href="/" class="cs-course-search-btn a-styles-removal">
+                <p class="a-font">Go home</p>
+            </a>
+            {{end}}
+
+            <div id="hidden-enrolled-section-div" class="d-none">
+                <p>
+                    You are already enrolled in the only section available.
+                </p>
+                <a href="/" class="cs-course-search-btn a-styles-removal">
+                    <p class="a-font" >Go home</p>
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>

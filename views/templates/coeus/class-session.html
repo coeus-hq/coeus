@@ -1,0 +1,132 @@
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+<section id="session-content-section " class="session-content-section section desktop-wrapper">
+
+  <div class="modal fade end-session-bootstrap-modal-override" id="end-session-modal" tabindex="-1" aria-labelledby="end-session-modal" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content end-session-modal-wrapper">
+        <div class="end-session-modal">
+          Instructor has ended your session.
+          <br>
+          You will be redirected to the home page in: <p id="end-count-down"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div>
+      <nav aria-label="breadcrumb" class="mt2r">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="breadcrumb-font" href="/">My Courses</a></li>
+          <li class="breadcrumb-font breadcrumb-item active" aria-current="page">{{ .courseInfo.Number}}</li>
+        </ol>
+      </nav>
+
+      <div class="d-flex justify-content-between mb-3">
+        <input id="userID" value="{{.user}}" type="hidden">
+        <input id="moderator-status" type="hidden" value="{{.moderatorStatus.Type}}">
+        <input id="class-session-ID" type="hidden" value="{{.classSessionIDInt}}">
+        <input id="timezone" type="hidden" value="{{.timezone}}">
+
+        <div class="live-session-wrapper">
+          <p class="in-session-text">
+            Live Session
+          </p>
+
+          <p class="schedule-time-font">
+            {{.scheduleInfo.Time}}
+          </p>
+
+          {{if eq .moderatorStatus.Type "instructor"}}
+
+            <button class="end-session-btn" data-mdb-toggle="modal" data-mdb-target="#instructor-end-session-modal">
+              End session
+            </button>
+         
+          {{end }}
+        </div>
+
+
+        <div class="participant-count-wrapper ">
+          <img src="/static/images/icon-students-dark.svg" alt="active users">
+          <p id="participant-count" class="">{{ .participantCount}} </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tabs navs -->
+    <ul class="nav nav-tabs nav-justified mb-3" id="custom-tabs" role="tablist">
+      <li onclick="newestTabToggle()" class="nav-item" role="presentation">
+        <a class="session-tab-font session-tab nav-link active" id="newest-tab" data-mdb-toggle="tab"
+          href="#created-cards" role="tab" aria-controls="created-cards" aria-selected="true">Newest</a>
+      </li>
+      <li onclick="topTabToggle()" class="nav-item" role="presentation">
+        <a class="session-tab-font session-tab nav-link" id="top-tab" data-mdb-toggle="tab" href="#votes-cards"
+          role="tab" aria-controls="votes-cards" aria-selected="false">Top</a>
+      </li>
+    </ul>
+
+    <!-- Tabs content -->
+    <div class="tab-content" id="custom-tab-content">
+
+      {{if eq .moderatorStatus.Type "instructor"}}
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" onchange="unansweredToggle()" value="" id="unanswered-toggle" />
+        <label class="form-check-label unanswered-toggle-font" for="unanswered-toggle">Unanswered</label>
+      </div>
+      {{end}}
+
+      <div class="tab-pane fade show active" id="created-cards" role="tabpanel" aria-labelledby="newest-tab">
+
+      </div>
+
+      <div class="tab-pane fade" id="votes-cards" role="tabpanel" aria-labelledby="top-tab">
+
+      </div>
+
+      <!-- UNANSWERED GROUP -->
+      <div class="tab-pane fade" id="unanswered-votes-cards" role="tabpanel" aria-labelledby="top-tab">
+
+      </div>
+      <div class="tab-pane fade" id="unanswered-created-cards" role="tabpanel" aria-labelledby="newest-tab">
+
+      </div>
+      <!-- UNANSWERED GROUP -->
+
+      <div class="tab-pane fade active" id="welcome-message" role="tabpanel" aria-labelledby="welcome-message">
+        Time to ask your first question!
+      </div>
+    </div>
+</section>
+
+
+{{ template "chatbox.html" . }}
+{{ template "bottom-navbar.html" . }}
+
+
+<!-- End session modal -->
+<div class="modal fade instructor-bootstrap-modal-override" id="instructor-end-session-modal" tabindex="-1" aria-labelledby="instructor-end-session-modal"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">Confirm End Session</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to end this session?
+        <br>
+        <br>
+        <div class="modal-body2"> All questions will be removed, and all participants will be redirected to the home page.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p type="button" class="cancel-modal-button" data-mdb-dismiss="modal">Cancel</p>
+        <button onclick="endSession('{{.classSessionIDInt}}')" value="{{.classSessionIDInt}}" type="button"
+          class="end-modal-button" id="end-session-modal-button">End</button>
+      </div>
+    </div>
+  </div>
+</div>

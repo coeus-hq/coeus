@@ -1,0 +1,45 @@
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+<div class="my-courses-wrapper desktop-wrapper">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="breadcrumb-font" href="/">My Courses</a></li>
+            <li class="breadcrumb-font breadcrumb-item active" aria-current="page">Search Courses</li>
+        </ol>
+    </nav>
+
+    <form class="text-center course-search-form" action="/course-search" method="post"
+        onsubmit="courseSearchSubmit(event);">
+        <div id="notification"></div>
+        <h2 class="course-search-header">
+            Search for courses
+        </h2>
+        <input type="text" id="courseIdentifier" class="course-search-input form-control " name="courseIdentifier"
+            placeholder="Course # or name" />
+
+        <button type="submit" class="cs-course-search-btn">Search</button>
+    </form>
+
+    <hr>
+
+    <p style="margin-top: 4rem; margin-bottom: 4rem;">For soft launch:
+        <br>
+        Our live testing course is
+        <br>
+        CSCI 1115
+        <br>
+        Or search for most courses with CS
+    </p>
+
+    {{if .isInstructor}}
+    <hr class="my-5">
+    <div class="d-flex justify-content-end">
+        <a href="/instructor" class="cs-course-management-btn  mt-4 m-auto">Course
+            Management
+            Page
+        </a>
+    </div>
+    {{end}}
+
+</div>

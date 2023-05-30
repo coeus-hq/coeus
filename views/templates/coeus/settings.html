@@ -1,0 +1,45 @@
+{{template "header.html" .}}
+{{template "navbar.html" .}}
+<section class="my-courses-wrapper universal-desktop-wrapper">
+  <div class="container">
+    <h2 class="mb-4-settings">
+      Settings
+    </h2>
+    <div class="card border-0">
+      <div id="settings-form" class="card-body">
+        <input type="hidden" id="setting-timezone-offset" value="{{.timezone}}">
+
+        <form action="/settings" method="post">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input dark-form-check-input" type="checkbox" id="darkModeToggle"
+              name="dark-mode-toggle" {{.checked}}>
+            <label class="form-check-label" for="darkModeToggle">Enable dark mode</label>
+          </div>
+          <!-- the values for the timezones are in minutes, so -480 is UTC-8 (8 hours behind UTC), 0 is UTC, 330 is UTC+5:30 -->
+          <div class="mb-3">
+            <label for="timezone" class="form-label">Timezone set:</label>
+            <select class="form-select" name="timezone" id="timezone">
+              <option value="" disabled selected>Select a timezone</option>
+              <option value="-480">PST (UTC-8)</option>
+              <option value="-420">MST (UTC-7)</option>
+              <option value="-420">MDT (UTC-6)</option>
+              <option value="-360">CST (UTC-6)</option>
+              <option value="-300">CDT (UTC-5)</option>
+              <option value="-300">EST (UTC-5)</option>
+              <option value="-240">EDT (UTC-4)</option>
+              <option value="0">UTC</option>
+              <option value="60">CET (UTC+1)</option>
+              <option value="120">EET (UTC+2)</option>
+              <option value="330">IST (UTC+5:30)</option>
+            </select>
+          </div>
+
+          <button class="settings-btn mt-3" type="submit">Save Changes</button>
+        </form>
+        <hr class="my-5">
+
+        <a class="settings-btn" href="/logout">Log out</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+{{template "header.html" .}}
+
+<main class="text-left mt-5 form-wrapper">
+  <img class="coeus-create-account-logo" src="/static/images/coeus-logo-login.png" alt="Coeus logo">
+  
+  <form id="createAccountForm">
+    <h2 class="sign-in-header mb-3">Create an account</h2>
+    <input name="firstName" type="text" class="coeus-input  form-control sign-in-form-control" placeholder="First name">
+    <input name="lastName" type="text" class="coeus-input form-control sign-in-form-control" placeholder="Last name">
+    <input name="email" type="email" class="coeus-input form-control sign-in-form-control" placeholder="Email address">
+    <input name="password" type="password" class="coeus-input form-control sign-in-form-control" placeholder="Password">
+    <input name="confirmPassword" type="password" class="coeus-input form-control sign-in-form-control"
+      placeholder="Confirm password">
+
+    <div id="create-account-danger-alert" class="alert alert-danger" role="alert">
+      <!-- Error messages will appear here -->
+    </div>
+
+    <button onclick="validateCreateAccountForm(event)" type="submit" class="coeus-gradient-btn mt-3rem btn">Create account</button>
+  </form>
+
+  <section class="create-account-helper-wrapper">
+    <p class="create-account-helper">Or sign into an account </p>
+    <a href="/sign-in" class="create-account-link">Sign in</a>
+  </section>
+</main>
