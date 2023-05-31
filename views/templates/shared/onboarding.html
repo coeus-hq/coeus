@@ -1,20 +1,4 @@
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Coeus | Admin</title>
-    <link rel="icon" href="/static/images/coeus-favicon.svg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <!-- Google Fonts Roboto -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/management-styles.css" />
-    <script type="module" defer src="/static/js/coeus-management.js"></script>
-</head>
+{{template "head-nav.html" .}}
 
 <body>
     <div class="container">
@@ -159,7 +143,7 @@
 
 
                 <button onclick="submitOnboarding(event)" id="submit-onboarding" type="submit"
-                    class="coues-gradient-btn btn btn-primary organization-settings-save-btn">
+                    class="coues-gradient-btn organization-settings-save-btn">
                     Finish onboarding
                 </button>
 
@@ -187,7 +171,7 @@
     <footer class="footer mt-auto py-3 r-bg-D9">
         <div class="container d-flex justify-content-evenly">
 
-            <div class="d-flex r-gap-0-5" >
+            <div class="d-flex r-gap-0-5">
                 <a class="footer-link" href="">Terms & Conditions</a>
                 <div class="align-self-center">|</div>
                 <a class="footer-link" href="">System Status</a>
