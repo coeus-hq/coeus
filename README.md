@@ -42,7 +42,7 @@ These technologies combine to create Coeus.
 
 **1. Clone the Repository**: Open your terminal or command prompt and clone the Coeus repository by running the following command:
 ```bash
-git clone https://github.com/sambarlas/coeus.git
+git clone https://github.com/coeus-hq/coeus.git
 ```
 
 **2. Build and Run the Application**: Navigate to the project's root directory and run the following command to build and run the Coeus server:
@@ -84,7 +84,7 @@ The server should start, and you'll be able to access Coeus at http://localhost:
 
 **2. Clone the Repository**: Open your terminal or command prompt and clone the Coeus repository by running the following command:
 ```bash
-git clone https://github.com/sambarlas/coeus.git
+git clone https://github.com/coeus-hq/coeus.git
 ```
 
 **2. Build and Run the Application**: Navigate to the project's root directory and run the following command to build and run the Coeus server:
