@@ -11,6 +11,7 @@ func RenderTemplate(c *gin.Context, code int, templateName string, data gin.H) {
 	session := sessions.Default(c)
 
 	data["isInstructor"] = session.Get("isInstructor")
+	data["managementTemplates"] = session.Get("managementTemplates")
 	data["isAdmin"] = session.Get("isAdmin")
 	data["usingSendGrid"] = session.Get("usingSendGrid")
 	data["userInitials"] = session.Get("userInitials")

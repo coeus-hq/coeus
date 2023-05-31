@@ -465,7 +465,7 @@ func (o Organization) DatabaseSeed() error {
 	DELETE FROM vote;
 	INSERT INTO user VALUES (1, 'student@coeus.education', '$2a$10$6rF4ewi/ZealdOt9ghvYJeyA4Oh/VKME/kzbd7Yw3MdL5.frlKNae', '1', 'Student', datetime('now'), datetime('now'));
 	INSERT INTO user VALUES (NULL, 'ta@coeus.education', '$2a$10$6rF4ewi/ZealdOt9ghvYJeyA4Oh/VKME/kzbd7Yw3MdL5.frlKNae', 'A', 'T', datetime('now'), datetime('now'));
-	INSERT INTO user VALUES (NULL, 'instructor@coeus.education', '$2a$10$6rF4ewi/ZealdOt9ghvYJeyA4Oh/VKME/kzbd7Yw3MdL5.frlKNae', 'I', 'I', datetime('now'), datetime('now'));
+	INSERT INTO user VALUES (3, 'instructor@coeus.education', '$2a$10$6rF4ewi/ZealdOt9ghvYJeyA4Oh/VKME/kzbd7Yw3MdL5.frlKNae', 'I', 'I', datetime('now'), datetime('now'));
 	INSERT INTO user VALUES (NULL, 'whalencollin@gmail.com', '$2a$10$6rF4ewi/ZealdOt9ghvYJeyA4Oh/VKME/kzbd7Yw3MdL5.frlKNae', 'Whalen', 'Collin', datetime('now'), datetime('now'));
 	INSERT INTO user VALUES (999, 'testuser@gmail.com', '$2a$10$6rF4ewi/ZealdOt9ghvYJeyA4Oh/VKME/kzbd7Yw3MdL5.frlKNae', 'U', 'T', datetime('now'), datetime('now'));
 	INSERT INTO setting VALUES (1, 1, false, 0);
@@ -540,6 +540,7 @@ func (o Organization) DatabaseSeed() error {
 	INSERT INTO participants(session_id, user_id, joined_at) VALUES (1, 1, '2022-01-01 10:00:00');
 	INSERT INTO participants(session_id, user_id, joined_at) VALUES (1, 2, '2022-01-01 10:02:00');
 	INSERT INTO moderator(user_id, section_id, type) VALUES (1, 3, 'student');
+	INSERT INTO moderator(user_id, section_id, type) VALUES (3, NULL, 'instructor');
 	INSERT INTO moderator(user_id, section_id, type) VALUES (999, 3, 'instructor');
 	INSERT INTO moderator(user_id, section_id, type) VALUES (3, 3, 'instructor');
 	INSERT INTO moderator(user_id, section_id, type) VALUES (1, 4, 'student');
@@ -823,6 +824,7 @@ func (o Organization) DatabaseSeed() error {
 	INSERT INTO user_attendance(user_id, attendance_id, status) VALUES (8, 4, 'present');
 	INSERT INTO user_attendance(user_id, attendance_id, status) VALUES (9, 4, 'present');
 	INSERT INTO user_attendance(user_id, attendance_id, status) VALUES (10, 4, 'absent');
+
 		`
 	_, err := db.Exec(sqlStatement)
 	if err != nil {

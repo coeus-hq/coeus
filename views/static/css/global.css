@@ -940,7 +940,7 @@ body {
 }
 
 .custom-nav-dropdown-item {
-  width: fit-content;
+  width: 100% !important;
 }
 
 .organization-logo {
@@ -969,10 +969,6 @@ body {
 .custom-nav-dropdown {
   position: relative;
   display: inline-block;
-}
-
-.br7pxhv:hover {
-  border-radius: 7px !important;
 }
 
 .custom-nav-dropdown-content {

@@ -32,7 +32,9 @@ func OnboardingGetHandler(c *gin.Context) {
 		MaxAge:  -1,
 	})
 
-	RenderTemplate(c, http.StatusOK, "onboarding.html", gin.H{})
+	RenderTemplate(c, http.StatusOK, "onboarding.html", gin.H{
+		"onboarding": true,
+	})
 }
 
 func SignInGetHandler(c *gin.Context) {
@@ -675,6 +677,15 @@ func AdminSettingsGetHandler(c *gin.Context) {
 }
 
 func AdminUsersGetHandler(c *gin.Context) {
+
+	session := sessions.Default(c)
+
+	// Get the admin ID
+	adminID, err := new(models.Organization).GetAdminID()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	// Get the users from the database
 	users, err := new(models.User).GetAll()
 	if err != nil {
@@ -698,6 +709,15 @@ func AdminUsersGetHandler(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	// set the admin initials to the session
+	adminInitials, err := new(models.User).GetUserInitials(adminID)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	session.Set("userInitials", adminInitials)
+	session.Save()
 
 	RenderTemplate(c, http.StatusOK, "user-management.html", gin.H{
 		"users":        users,

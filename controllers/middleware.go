@@ -56,6 +56,9 @@ func AdminForbidden() gin.HandlerFunc {
 		session := sessions.Default(c)
 		isAdmin := session.Get("isAdmin")
 
+		session.Set("managementTemplates", false)
+		session.Save()
+
 		if isAdmin != nil && isAdmin.(bool) {
 			c.HTML(http.StatusNotFound, "404.html", gin.H{})
 			c.Abort()
@@ -75,6 +78,10 @@ func InstructorRequired(c *gin.Context) {
 		c.Abort()
 		c.Redirect(http.StatusMovedPermanently, "/sign-in")
 		return
+	} else {
+		session.Set("managementTemplates", true)
+		session.Save()
 	}
+
 	c.Next()
 }

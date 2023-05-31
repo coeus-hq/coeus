@@ -1,0 +1,33 @@
+<header>
+    <nav class="coeus-navbar navbar">
+        <div class="container-fluid">
+            <div class="d-flex">
+                <a class="navbar-brand" href="/">
+                    {{if eq .organizationLogo ""}}
+                    <img src="/static/logo/logo-placeholder.png" class="organization-logo"
+                        alt="logo placeholder" />
+                    {{else}}
+                    <img src="{{.organizationLogo}}" class="organization-logo" />
+                    {{end}}
+                </a>
+                <a class="navbar-brand" href="/">
+                    <img id="coeus-logo-dark" src="/static/images/coeus-logo.png" class="coeus-logo"
+                        alt="Coeus3 Logo" />
+                </a>
+            </div>
+            <div class="dropdown custom-nav-dropdown">
+                <button class="dropdown-circle" id="userDropdown" data-mdb-toggle="dropdown"
+                    aria-expanded="false">
+                    {{.userInitials}}
+                </button>
+                <ul class="dropdown-menu custom-nav-dropdown-menu" aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item custom-nav-dropdown-item" href="/settings">
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
