@@ -181,6 +181,9 @@
     width: 100% !important;
 }
 
+.coeus-navbar {
+    border-bottom: 0.5px solid #434B59;
+}
 
 /* DROPDOWN STYLES */
 
