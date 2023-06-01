@@ -287,6 +287,14 @@ func SettingsGetHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userID")
 
+	// Add a check to ensure the type assertion won't panic
+	userIDint, ok := userID.(int)
+	if !ok {
+		// Handle the case where userID is not an int
+		fmt.Println("userID is not an int")
+		return
+	}
+
 	setting := new(models.Setting)
 	s, _ = setting.Get(userID.(int))
 
@@ -297,12 +305,24 @@ func SettingsGetHandler(c *gin.Context) {
 		checked = ""
 	}
 
+	// Convert int to int64
+	userIDint64 := int64(userIDint)
+
+	user, err := new(models.User).Get(userIDint64)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	RenderTemplate(c, http.StatusOK, "settings.html", gin.H{
-		"content":  "Settings page",
-		"checked":  checked,
-		"timezone": s.TimezoneOffset,
+		"content":   "Settings page",
+		"checked":   checked,
+		"timezone":  s.TimezoneOffset,
+		"firstName": user.FirstName,
+		"lastName":  user.LastName,
+		"email":     user.Email,
 	})
 }
+
 func SettingsPostHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userID").(int)
