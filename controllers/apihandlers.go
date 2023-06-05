@@ -283,6 +283,35 @@ func APIGetUserGetHandler(c *gin.Context) {
 		fmt.Println(err)
 	}
 
+	isDemo, err := new(models.Organization).GetStatus()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// If the database is for softlaunch, then remove the admin user from the slice of users structs
+	// this is done so that the admin user cannot be seen in the users table in the softlaunch database
+	// preventing someone from changing the admin credentials
+	if isDemo == "true" {
+		filteredUsers := make([]struct {
+			ID                   int64
+			Email                string
+			LastName             string
+			FirstName            string
+			CreatedAt            string
+			UpdatedAt            string
+			HighestModeratorType string
+		}, 0)
+		for _, user := range users {
+			if user.Email != "admin@coeus.education" {
+				filteredUsers = append(filteredUsers, user)
+			}
+		}
+		users = filteredUsers
+	} else {
+		fmt.Println("isDemo is not softlaunch")
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"users": users,
 	})

@@ -77,6 +77,15 @@ func SignInPostHandler(c *gin.Context) {
 
 	userID := session.Get("userID")
 
+	// Check if the database is demo
+	isDemo, err := new(models.Organization).GetStatus()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// Set the isDemo to the session
+	session.Set("isDemo", isDemo)
+
 	if userID != nil {
 
 		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
@@ -165,8 +174,23 @@ func SignInPostHandler(c *gin.Context) {
 		}
 
 	} else {
+
+		isDemo, err := new(models.Organization).GetStatus()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		var content string
+
+		if isDemo == "true" {
+			content = "Incorrect username or password. For soft launch: Database may not be seeded yet (scroll down)."
+		} else {
+			content = "Incorrect username or password."
+		}
+
 		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": "Incorrect username or password. For soft launch: Database may not be seeded yet (scroll down).",
+			"content": content,
 		})
 	}
 }

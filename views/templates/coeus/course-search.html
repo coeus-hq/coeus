@@ -20,7 +20,8 @@
 
         <button type="submit" class="cs-course-search-btn">Search</button>
     </form>
-
+    
+    {{if eq .isDemo "true"}}
     <hr>
 
     <p style="margin-top: 4rem; margin-bottom: 4rem;">For soft launch:
@@ -31,6 +32,7 @@
         <br>
         Or search for most courses with CS
     </p>
+    {{end}}
 
     {{if .isInstructor}}
     <hr class="my-5">

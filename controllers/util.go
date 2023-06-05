@@ -23,5 +23,6 @@ func RenderTemplate(c *gin.Context, code int, templateName string, data gin.H) {
 	data["timezone"] = session.Get("timezone")
 	data["organizationLogo"] = session.Get("organizationLogo")
 	data["organizationName"] = session.Get("organizationName")
+	data["isDemo"] = session.Get("isDemo")
 	c.HTML(http.StatusOK, templateName, data)
 }

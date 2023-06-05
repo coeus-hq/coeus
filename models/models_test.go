@@ -743,6 +743,15 @@ func TestHasVotedAppend(t *testing.T) {
 	}
 }
 
+func TestGetStatus(t *testing.T) {
+
+	_, err := new(Organization).GetStatus()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+}
+
 func TestGetOrganizationID(t *testing.T) {
 
 	// Get the organization ID from the database

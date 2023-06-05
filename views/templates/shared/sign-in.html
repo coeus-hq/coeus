@@ -29,11 +29,17 @@
     <button onclick="deleteCookies()" type="submit" class="coeus-gradient-btn">Sign in</button>
   </form>
 
+
+  <section class="create-account-helper-wrapper">
+    <p class="create-account-helper">Don't have an account? </p>
+    <a href="/create-account" class="create-account-link">Create account</a>
+  </section>
+  
 </section>
 
-<section class="create-account-helper-wrapper">
-  <p class="create-account-helper">Don't have an account? </p>
-  <a href="/create-account" class="create-account-link">Create account</a>
-</section>
+
+{{if eq .isDemo "true"}}
 
 {{template "soft-launch.html" .}}
+
+{{end}}

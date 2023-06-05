@@ -81,6 +81,31 @@ func (o Organization) SetAdmin(userID int) error {
 }
 
 // ** READ **
+// GetStatus retrieves the status of the organization.
+// It returns a string and any error encountered.
+func (o Organization) GetStatus() (string, error) {
+	db := NewDB()
+	var status string
+	sqlStatement := `
+	SELECT
+		is_demo
+	FROM
+		organization
+	LIMIT
+		1;
+	`
+
+	row := db.QueryRow(sqlStatement)
+	switch err := row.Scan(&status); err {
+	case sql.ErrNoRows:
+		return "", err
+	case nil:
+		return status, nil
+	default:
+		return "", err
+	}
+}
+
 // Get retrieves an organization from the database.
 // It returns an Organization object and any error encountered.
 func (o Organization) Get(orgID int) (Organization, error) {

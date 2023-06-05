@@ -24,12 +24,16 @@
       {{end}}
     </div>
 
+    {{if eq .isDemo "true"}}
+
     <hr style="margin-top: 4rem;">
 
     <p style="margin-top: 4rem;">For soft launch: Cookies may have not been deleted correct switching between accounts,
       try logging out.</p>
 
     <a class="settings-btn" href="/logout">Log out</a>
+
+    {{end}}
 
   </section>
 </main>

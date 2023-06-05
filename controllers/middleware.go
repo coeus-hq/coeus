@@ -2,12 +2,30 @@ package controllers
 
 import (
 	"coeus/models"
+	"fmt"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 
 	"net/http"
 )
+
+func CheckDatabaseType(c *gin.Context) {
+	session := sessions.Default(c)
+
+	isDemo, err := new(models.Organization).GetStatus()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("DB Status: ", isDemo)
+
+	session.Set("isDemo", isDemo)
+	session.Save()
+
+	c.Next()
+}
 
 // If the organization is not set, redirect to the organization page
 func OrganizationRequired(c *gin.Context) {

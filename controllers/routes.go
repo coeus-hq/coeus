@@ -5,6 +5,8 @@ import (
 )
 
 func PublicRoutes(g *gin.RouterGroup) {
+	g.Use(CheckDatabaseType)
+
 	g.GET("/sign-in", SignInGetHandler)
 	g.POST("/sign-in", SignInPostHandler)
 	g.GET("/create-account", CreateAccountGetHandler)
