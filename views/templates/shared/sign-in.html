@@ -5,10 +5,18 @@
 
   <form action="/sign-in" method="post">
     <h2 class="sign-in-header mb-3">Sign in</h2>
+
+    {{if eq .isDemo "true"}}
     <input name="username" type="email" id="emailAddress" class="coeus-input form-control sign-in-form-control"
       placeholder="Email: admin@coeus.education" value="student@coeus.education">
     <input name="password" type="password" id="password" class="coeus-input form-control sign-in-form-control"
       placeholder="Password: coeus" value="coeus">
+    {{else}}
+    <input name="username" type="email" id="emailAddress" class="coeus-input form-control sign-in-form-control"
+      placeholder="Email">
+    <input name="password" type="password" id="password" class="coeus-input form-control sign-in-form-control"
+      placeholder="Password">
+    {{end}}
 
     {{if .content}}
     <div class="alert alert-danger mt-4" role="alert">
@@ -34,7 +42,7 @@
     <p class="create-account-helper">Don't have an account? </p>
     <a href="/create-account" class="create-account-link">Create account</a>
   </section>
-  
+
 </section>
 
 
