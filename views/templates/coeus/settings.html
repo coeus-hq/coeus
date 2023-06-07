@@ -3,77 +3,75 @@
 <section class="my-courses-wrapper universal-desktop-wrapper">
   <input type="hidden" id="setting-timezone-offset" value="{{.timezone}}">
 
-  <button id="edit-settings-toggle">
+  <button id="edit-settings-toggle" onclick="toggleSettingsForm()">
     Edit settings
   </button>
 
-  <h2 class="mb-4-settings">
+  <h2 class="settings-font-1">
     Settings
   </h2>
 
   <section id="settings-info">
-    <h4>
-      Account
-    </h4>
+
     <p>
-      <span class="settings-info-label">Name:</span>
+      <span class="settings-info-label settings-font-2">Full name:</span>
       <span class="settings-info-value">{{.firstName}} {{.lastName}}</span>
     </p>
     <p>
-      <span class="settings-info-label">Timezone:</span>
+      <span class="settings-info-label settings-font-2">Timezone:</span>
       <span id="settings-timezone-info" class="settings-info-value"></span>
     </p>
 
-    <h4>
+    <h4 class="settings-font-1">
       Contact
     </h4>
     <p>
-      <span class="settings-info-label">Email:</span>
+      <span class="settings-info-label settings-font-2">Email:</span>
       <span class="settings-info-value">{{.email}}</span>
     </p>
 
-    <h4>
+    <h4 class="settings-font-1">
       Display
     </h4>
-
-
-    <div class="form-check form-switch mb-3">
-      <input onchange="toggleDarkTheme()" class="form-check-input dark-form-check-input" type="checkbox" id="darkModeToggle" name="dark-mode-toggle"
-        {{.checked}}>
-      <label class="form-check-label" for="darkModeToggle">Enable dark mode</label>
+    <div class="settings-label-check-wrapper">
+      <label class="form-check-label settings-font-2" for="darkModeToggle">Dark mode</label>
+      <div class="form-check form-switch settings-form-check">
+        <input onchange="toggleDarkTheme()" class="form-check-input dark-form-check-input settings-check-input "
+          type="checkbox" id="darkModeToggle" name="dark-mode-toggle" {{.checked}}>
+      </div>
     </div>
 
   </section>
 
-  <form id="settings-form" class="hidden" action="/settings" method="post">
+  <form id="settings-form" class="hidden">
+
 
     <div class="mb-3">
       <label for="firstName" class="form-label">First Name</label>
-      <input type="text" class="form-control" id="firstName" name="firstName" value="{{.firstName}}">
+      <input type="text" class="form-control settings-input-border" id="firstName" name="firstName"
+        value="{{.firstName}}">
     </div>
 
     <div class="mb-3">
       <label for="lastName" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="lastName" name="lastName" value="{{.lastName}}">
+      <input type="text" class="form-control settings-input-border" id="lastName" name="lastName" value="{{.lastName}}">
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="text" class="form-control" id="email" name="email" value="{{.email}}">
+      <input type="text" class="form-control settings-input-border" id="email" name="email" value="{{.email}}">
     </div>
 
 
     <!-- the values for the timezones are in minutes, so -480 is UTC-8 (8 hours behind UTC), 0 is UTC, 330 is UTC+5:30 -->
     <div class="mb-3">
       <label for="timezone" class="form-label">Timezone set:</label>
-      <select class="form-select" name="timezone" id="timezone">
+      <select class="form-select settings-input-border" name="timezone" id="timezone">
         <option value="" disabled selected>Select a timezone</option>
         <option value="-480">PST (UTC-8)</option>
         <option value="-420">MST (UTC-7)</option>
-        <option value="-420">MDT (UTC-6)</option>
         <option value="-360">CST (UTC-6)</option>
         <option value="-300">CDT (UTC-5)</option>
-        <option value="-300">EST (UTC-5)</option>
         <option value="-240">EDT (UTC-4)</option>
         <option value="0">UTC</option>
         <option value="60">CET (UTC+1)</option>
@@ -82,80 +80,11 @@
       </select>
     </div>
 
-    <button class="settings-btn mt-3" type="submit">Save Changes</button>
+    <button id="updateUserSettingsButton" onclick="updateUserSettings(event)" data-user-id="{{ .user}}"
+      class="settings-btn mt-3">Save Changes</button>
+
   </form>
 
   <a class="settings-btn mt-5" href="/logout">Sign out</a>
 
 </section>
-
-<style>
-  #edit-settings-toggle {
-    align-items: center;
-    text-align: center;
-    text-decoration-line: underline;
-    color: #526481;
-    border: none;
-    float: right;
-    background-color: transparent;
-  }
-
-
-</style>
-
-<script>
-
-  // Get the value of the timezone offset from the hidden input
-  let timezoneOffset = document.getElementById("setting-timezone-offset").value;
-  // Convert the offset to a text string based on the offset value
-  let timezoneOffsetText = convertTimezoneOffsetToText(timezoneOffset);
-  // Set the text of the timezone info span to the offset text
-  document.getElementById("settings-timezone-info").innerText = timezoneOffsetText;
-
-  // make a switch statement to convert the offset to a text string
-  function convertTimezoneOffsetToText(offset) {
-    switch (offset) {
-      case "-480":
-        return "PST (UTC-8)";
-      case "-420":
-        return "MST (UTC-7)";
-      case "-360":
-        return "CST (UTC-6)";
-      case "-300":
-        return "EST (UTC-5)";
-      case "-240":
-        return "EDT (UTC-4)";
-      case "0":
-        return "UTC";
-      case "60":
-        return "CET (UTC+1)";
-      case "120":
-        return "EET (UTC+2)";
-      case "330":
-        return "IST (UTC+5:30)";
-      default:
-        return "UTC";
-    }
-  }
-
-  // When the edit settings button is clicked, toggle the display of the settings form
-  document.getElementById("edit-settings-toggle").addEventListener("click", function () {
-    document.getElementById("settings-form").classList.toggle("hidden");
-    document.getElementById("settings-info").classList.toggle("hidden");
-  });
-
-  // When the dark mode toggle is clicked send a post request to the server to toggle the dark mode setting
- function toggleDarkTheme(){
-    let darkModeToggle = document.getElementById("darkModeToggle");
-    let darkMode = darkModeToggle.checked;
-   
-    fetch("/settings/dark-theme", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-
-  }
-</script>

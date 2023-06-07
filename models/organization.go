@@ -15,6 +15,7 @@ type Organization struct {
 	Onboarding           string
 	CreatedAt            string
 	UpdatedAt            string
+	IsDemo               bool
 }
 
 // ** CREATE **
@@ -47,7 +48,8 @@ func (o Organization) Add(name, organizationTimezone, logoPath, apiKey, email st
 			$5,
 			true,
 			datetime('now'),
-			datetime('now')
+			datetime('now'),
+			false
 			)
 		RETURNING id`
 	var ID int
@@ -118,6 +120,7 @@ func (o Organization) Get(orgID int) (Organization, error) {
 	var APIKey string
 	var Email string
 	var Onboarding string
+	var IsDemo bool
 
 	db := NewDB()
 	sqlStatement := `
@@ -129,11 +132,11 @@ func (o Organization) Get(orgID int) (Organization, error) {
 			id = $1;`
 
 	row := db.QueryRow(sqlStatement, orgID)
-	switch err := row.Scan(&id, &Name, &OrganizationTimezone, &LogoPath, &APIKey, &Email, &Onboarding, &CreatedAt, &UpdatedAt); err {
+	switch err := row.Scan(&id, &Name, &OrganizationTimezone, &LogoPath, &APIKey, &Email, &Onboarding, &CreatedAt, &UpdatedAt, &IsDemo); err {
 	case sql.ErrNoRows:
 		return Organization{}, err
 	case nil:
-		organization := Organization{id, Name, OrganizationTimezone, LogoPath.String, APIKey, Email, Onboarding, CreatedAt, UpdatedAt}
+		organization := Organization{id, Name, OrganizationTimezone, LogoPath.String, APIKey, Email, Onboarding, CreatedAt, UpdatedAt, IsDemo}
 		return organization, err
 	default:
 		return Organization{}, err

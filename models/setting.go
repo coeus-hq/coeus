@@ -102,6 +102,61 @@ func (s Setting) Update(userID int, name string, value string, timezoneOffset in
 	return nil
 }
 
+// UpdateTimezone updates the timezone offset for a user in the database.
+// It returns any error encountered.
+func (s Setting) UpdateTimezone(userID int, timezoneOffset int) error {
+	db := NewDB()
+
+	sqlStatement := `
+		UPDATE
+			setting
+		SET
+			timezone_offset = $1
+		WHERE
+			user_id = $2`
+
+	_, err := db.Exec(sqlStatement, timezoneOffset, userID)
+	if err != nil {
+		return fmt.Errorf("unable to update: %v", err)
+	}
+
+	return nil
+}
+
+// ToggleDarkTheme toggles the dark theme setting for a user in the database.
+func (s Setting) ToggleDarkTheme(userID int) (bool, error) {
+	db := NewDB()
+
+	updateStatement := `
+		UPDATE 
+			setting 
+		SET 
+			theme = NOT theme
+		WHERE 
+			user_id = $1`
+
+	_, err := db.Exec(updateStatement, userID)
+	if err != nil {
+		return false, fmt.Errorf("unable to update: %v", err)
+	}
+
+	// Retrieve the current value of theme for the user
+	var newTheme bool
+	selectStatement := `
+		SELECT 
+			theme 
+		FROM 
+			setting 
+		WHERE 
+			user_id = $1`
+	err = db.QueryRow(selectStatement, userID).Scan(&newTheme)
+	if err != nil {
+		return false, fmt.Errorf("unable to retrieve new theme value: %v", err)
+	}
+
+	return newTheme, nil
+}
+
 // ** DELETE **
 // Delete deletes a setting from the database.
 // It returns any error encountered.

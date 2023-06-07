@@ -699,6 +699,7 @@ body {
 
 
 /* ADD COURSE SECTION PAGE START */
+
 #select-section-alert {
   display: none;
   color: red;
@@ -1105,15 +1106,6 @@ body {
   border-radius: 10px;
 }
 
-.mb-4-settings {
-  text-align: left;
-  font-family: Poppins;
-  font-style: normal;
-  color: #526481;
-  font-weight: 500;
-  font-size: 20px 30px 40px;
-
-}
 
 /* SETTINGS END */
 
@@ -2101,6 +2093,10 @@ body {
   border-radius: 10px;
 }
 
+.delete-modal-height {
+  height: 300px;
+}
+
 /* 404 PAGE STYLES START */
 .text-danger {
   font-family: 'Poppins';
@@ -2151,8 +2147,76 @@ body {
 
 /* 404 PAGE STYLES END */
 
+/* SETTINGS PAGE START */
+
+.settings-font-1 {
+  margin-bottom: 2rem;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  color: #526481;
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.settings-font-2 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 30px;
+  color: #272F3C;
+}
+
+.settings-font-3 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #272F3C;
+}
+
+#edit-settings-toggle {
+  align-items: center;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #526481;
+  border: none;
+  float: right;
+  background-color: transparent;
+}
+
+.settings-check-input:checked {
+  background-color: #D9D9D9 !important;
+  border-color: #D9D9D9 !important;
+}
+
+.settings-input-border {
+  background: #FFFFFF;
+  border: 0.5px solid #526481;
+  border-radius: 10px;
+}
+
+.settings-form-check {
+  margin-bottom: 0 !important;
+  align-self: center;
+}
+
+.settings-label-check-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+/* SETTINGS PAGE END */
+
 /* RANDOM UTILS */
 
 .r-br10 {
   border-radius: 10px;
 }
+
+.r-mb4 {
+  margin-bottom: 4rem;
+}
+

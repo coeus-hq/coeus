@@ -337,10 +337,12 @@ func SettingsGetHandler(c *gin.Context) {
 		fmt.Println(err)
 	}
 
+	session.Set("timezone", s.TimezoneOffset)
+	session.Save()
+
 	RenderTemplate(c, http.StatusOK, "settings.html", gin.H{
 		"content":   "Settings page",
 		"checked":   checked,
-		"timezone":  s.TimezoneOffset,
 		"firstName": user.FirstName,
 		"lastName":  user.LastName,
 		"email":     user.Email,
@@ -754,7 +756,7 @@ func AdminUsersGetHandler(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	// set the admin initials to the session
+	// Set the admin initials to the session
 	adminInitials, err := new(models.User).GetUserInitials(adminID)
 	if err != nil {
 		fmt.Println(err)
@@ -768,7 +770,6 @@ func AdminUsersGetHandler(c *gin.Context) {
 		"count":        userCount,
 		"organization": organization,
 	})
-
 }
 
 func InstructorCoursesGetHandler(c *gin.Context) {

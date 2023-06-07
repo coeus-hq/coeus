@@ -19,8 +19,6 @@ func CheckDatabaseType(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("DB Status: ", isDemo)
-
 	session.Set("isDemo", isDemo)
 	session.Save()
 

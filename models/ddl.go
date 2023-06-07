@@ -157,8 +157,7 @@ var ddl = []string{
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         section_id INTEGER,
-        type TEXT CHECK(type IN ('student', 'moderator', 'teacher assistant', 'instructor'))
-    )`,
+		type TEXT CHECK(type IN ('student', 'moderator', 'teacher assistant', 'instructor'))    )`,
 
 	`CREATE TABLE verify_user(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
