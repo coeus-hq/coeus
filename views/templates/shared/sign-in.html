@@ -3,7 +3,8 @@
 <section class="text-left mt-5 form-wrapper">
   <img class="coeus-create-account-logo" src="/static/images/coeus-logo-login.png" alt="Coeus logo">
 
-  <form action="/sign-in" method="post">
+<form onsubmit="deleteCookies(), signInForm(event)">
+
     <h2 class="sign-in-header mb-3">Sign in</h2>
 
     {{if eq .isDemo "true"}}
@@ -18,11 +19,11 @@
       placeholder="Password">
     {{end}}
 
-    {{if .content}}
-    <div class="alert alert-danger mt-4" role="alert">
-      {{.content}}
+  
+    <div id="sign-in-fail-alert" class="hidden alert alert-danger mt-4" role="alert">
+     
     </div>
-    {{end}}
+    
 
     <div id="password-reset-success-alert" class="alert alert-success mt-4" role="alert">
       Your password has been reset.
@@ -34,7 +35,7 @@
     </a>
     {{end}}
 
-    <button onclick="deleteCookies()" type="submit" class="coeus-gradient-btn">Sign in</button>
+    <button type="submit" class="coeus-gradient-btn">Sign in</button>
   </form>
 
 
@@ -43,11 +44,11 @@
     <a href="/create-account" class="create-account-link">Create account</a>
   </section>
 
-</section>
-
-
+  
 {{if eq .isDemo "true"}}
 
-{{template "soft-launch.html" .}}
+{{template "demo.html" .}}
 
 {{end}}
+</section>
+

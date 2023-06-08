@@ -41,6 +41,20 @@ func OrganizationRequired(c *gin.Context) {
 	c.Next()
 }
 
+func PreventOnboardingIfOrganizationExists(c *gin.Context) {
+	// Check if organization exists
+	organizationExists := new(models.Organization).OrganizationExists()
+
+	// If organization exists and the user tries to access onboarding page, redirect them
+	if organizationExists && c.Request.URL.Path == "/onboarding" {
+		c.Redirect(http.StatusMovedPermanently, "/")
+		c.Abort()
+		return
+	}
+
+	c.Next()
+}
+
 func AuthRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	user := session.Get("userID")

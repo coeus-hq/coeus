@@ -14,7 +14,7 @@ func PublicRoutes(g *gin.RouterGroup) {
 	g.GET("/forgot-password", ForgotPasswordGetHandler)
 
 	// If the org is not set up (onboardingComplete), redirect to onboarding page
-	g.GET("/onboarding", OnboardingGetHandler)
+	g.GET("/onboarding", PreventOnboardingIfOrganizationExists, OnboardingGetHandler)
 }
 
 func PrivateRoutes(g *gin.RouterGroup) {

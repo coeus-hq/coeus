@@ -78,7 +78,6 @@ func main() {
 
 					// Delete the existing database and create a new one
 					models.ReseedSampleDB()
-
 				}
 			}
 		}()

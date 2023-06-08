@@ -30,7 +30,9 @@
                     </select>
                 </section>
 
+                {{if eq .isDemo "false"}}
                 <section class="onboarding-section-wrapper">
+
                     <h2 class="onboarding-section-header mb-3">
                         Change organization logo
                     </h2>
@@ -49,8 +51,11 @@
                     <button type="button" id="delete-logo-btn" class="btn btn-danger mt-3 w-25"
                         onclick="onDeleteLogoButtonClick()">Delete</button>
                 </section>
+                {{end}}
+
             </div>
 
+            {{if eq .isDemo "false"}}
             <section class="onboarding-section-wrapper mb-4 m-auto">
 
                 <h2 class="onboarding-section-header mb-3">
@@ -66,29 +71,14 @@
                 </div>
             </section>
 
+            {{end}}
             <button type="submit" class="coeus-gradient-btn organization-settings-save-btn">
                 Save Settings
             </button>
 
-
         </form>
 
-        <section class="db-options">
-            <h2 class="onboarding-section-header ">
-                Database options
-            </h2>
-
-            <div class="d-flex r-gap-1">
-                <button data-mdb-toggle="modal" data-mdb-target="#reset-database-modal" id="reset-db-btn">
-                    Reset Database
-                </button>
-
-                <button data-mdb-toggle="modal" data-mdb-target="#seed-database-modal" id="seed-db-btn">
-                    Seed Database
-                </button>
-            </div>
-
-        </section>
+       
         <hr class="my-5">
 
         <a class="coeus-gradient-btn-link organization-settings-save-btn " href="/logout">Log out</a>
@@ -114,56 +104,6 @@
 
     <div id="failToast" class="toast settings-saved-toast">
         <div class="toast-body">
-
-        </div>
-    </div>
-
-</div>
-
-<!-- Reset database confirm modal -->
-<div class="modal fade" id="reset-database-modal" tabindex="-1" aria-labelledby="reset-database-modal-label"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content margin-top-30">
-
-            <div class="modal-body delete-modal-body">
-                <p class="reset-modal-font-primary" id="reset-database-modal-label">
-                    Are you sure you reset the database?
-                    <br>
-                    This action will redirect you to the onboarding page.
-                </p>
-            </div>
-
-            <div class="m-auto">
-                <button onclick="databaseReset()" type="button" class="reset-database-modal-button"
-                    id="confirmResetButton" data-mdb-dismiss="modal">Reset</button>
-                <p class="cancel-modal-button" data-mdb-dismiss="modal">Cancel</p>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- Seed database confirm modal -->
-<div class="modal fade" id="seed-database-modal" tabindex="-1" aria-labelledby="seed-database-modal-label"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content margin-top-30">
-
-            <div class="modal-body delete-modal-body">
-                <p class="seed-modal-font-primary" id="seed-database-modal-label">
-                    Seeding the database will delete all existing data and replace it with the default data.
-                    <br>
-                    With the exception of the admin account and organization.
-                
-                </p>
-            </div>
-
-            <div class="m-auto">
-                <button onclick="databaseSeed()" type="button" class="seed-database-modal-button" id="confirmSeedButton"
-                    data-mdb-dismiss="modal">Seed</button>
-                <p class="cancel-modal-button" data-mdb-dismiss="modal">Cancel</p>
-            </div>
 
         </div>
     </div>

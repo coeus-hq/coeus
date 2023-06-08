@@ -45,13 +45,12 @@ func SignInGetHandler(c *gin.Context) {
 	if userID != nil {
 		c.Redirect(http.StatusSeeOther, "/")
 	} else {
-
 		// CheckAPIKey function to check if the API key exists
 		canResetPassword, _ := new(models.Organization).CheckAPIKey()
-
 		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
 			"canResetPassword": canResetPassword,
 		})
+
 	}
 }
 
@@ -87,10 +86,7 @@ func SignInPostHandler(c *gin.Context) {
 	session.Set("isDemo", isDemo)
 
 	if userID != nil {
-
-		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": "Please logout first",
-		})
+		RenderTemplate(c, http.StatusOK, "/logout", gin.H{})
 		return
 	}
 
@@ -104,9 +100,7 @@ func SignInPostHandler(c *gin.Context) {
 	password := c.PostForm("password")
 
 	if helpers.EmptyUserPass(username, password) {
-		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": "Parameters can't be empty",
-		})
+		c.JSON(http.StatusInternalServerError, gin.H{"content": "Parameters can't be empty"})
 	}
 
 	u := new(models.User)
@@ -150,49 +144,31 @@ func SignInPostHandler(c *gin.Context) {
 		// The following code is used to redirect the user to the correct page
 		// after sign-in depending on their role
 
-		// Check if the user is an instructor
+		// Determine the user's role
+		var role string
 		IsInstructor, err := new(models.Moderator).IsInstructor(id)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// If the user is an instructor, redirect to the instructor dashboard.
 		if IsInstructor {
+			role = "instructor"
 			session.Set("isInstructor", true)
 			session.Save()
-
-			c.Redirect(http.StatusSeeOther, "/")
 		} else if id == adminID {
-			// If the user is a superadmin, redirect to the admin dashboard.
+			role = "admin"
 			session.Set("isAdmin", true)
 			session.Save()
-
-			c.Redirect(http.StatusSeeOther, "/admin")
 		} else {
-			// If user is not an admin, and redirect to the my-courses page
-			c.Redirect(http.StatusSeeOther, "/")
+			role = "student"
 		}
 
-	} else {
-
-		isDemo, err := new(models.Organization).GetStatus()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		var content string
-
-		if isDemo == "true" {
-			content = "Incorrect username or password. For soft launch: Database may not be seeded yet (scroll down)."
-		} else {
-			content = "Incorrect username or password."
-		}
-
-		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": content,
-		})
+		// If user is authenticated, send a success status with role information.
+		c.JSON(http.StatusOK, gin.H{"success": true, "role": role})
+		return
 	}
+
+	c.JSON(http.StatusUnauthorized, gin.H{"content": "Invalid username or password"})
 }
 
 func LogoutGetHandler(c *gin.Context) {

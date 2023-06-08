@@ -34,7 +34,7 @@ func (o Organization) Add(name, organizationTimezone, logoPath, apiKey, email st
 		return 0, fmt.Errorf("unable to delete existing organization: %v", err)
 	}
 
-	// Insert new organization
+	// Insert new organization with the is_demo flag set to false
 	sqlStatement := `
 		INSERT INTO
 			organization

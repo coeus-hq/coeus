@@ -281,8 +281,8 @@ var ddl_sample = []string{
 	`INSERT INTO moderator(user_id, section_id, type) VALUES (2, 10, 'student');`,
 	`INSERT INTO moderator(user_id, section_id, type) VALUES (2, 1, 'student');`,
 
-	`INSERT INTO organization (name, organization_timezone, logo_path, api_key, email, onboarding_complete, created_at, updated_at, is_demo)
-    VALUES ('Coeus Education', 'UTC-5', '/static/logo/logo.svg', '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', 'cwhalen@instructors.2u.com', true, '2023-04-03 12:00:00', '2023-04-03 12:00:00', false);`,
+	`INSERT INTO organization (name, organization_timezone, logo_path, onboarding_complete, created_at, updated_at, is_demo)
+    VALUES ('Coeus Education', 'UTC-5', '/static/logo/logo.svg', true, '2023-04-03 12:00:00', '2023-04-03 12:00:00', true);`,
 
 	`INSERT INTO user_organization (user_id, organization_id) VALUES (1, 1);`,
 	`INSERT INTO user_organization (user_id, organization_id) VALUES (2, 1);`,
