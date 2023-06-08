@@ -8,6 +8,7 @@ import (
 )
 
 var Secret = []byte("secret")
+
 var DBNAME = "coeus"
 
 // Hack: Change CWD to project root for both running main and

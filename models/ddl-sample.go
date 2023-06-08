@@ -1,6 +1,6 @@
 package models
 
-var ddl = []string{
+var ddl_sample = []string{
 	// ******************************************************************************
 	// Create tables
 	// ******************************************************************************
@@ -22,6 +22,7 @@ var ddl = []string{
 	`DROP TABLE IF EXISTS attendance`,
 	`DROP TABLE IF EXISTS user_attendance`,
 	`DROP TABLE IF EXISTS is_admin`,
+	`DROP TABLE IF EXISTS schema_version`,
 
 	`CREATE TABLE schema_version (
         version INTEGER PRIMARY KEY,
