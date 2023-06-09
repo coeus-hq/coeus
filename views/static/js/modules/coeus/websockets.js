@@ -22,8 +22,30 @@ generalWs.onmessage = function (event) {
         case "new-logo":
             // Update the logo image
             const logoImg = document.getElementById("organization-logo");
-           
+
             logoImg.src = `${input.logoPath}`;
+            break;
+        case "demo-warning-banner":
+            // Show the demo warning modal
+            toggleBanner()
+            setTimeout(() => {
+                toggleBanner()
+            }, 30000); // 30 seconds delay
+
+            let countdown = document.getElementById("reseed-countdown");
+            let count = 30;
+            countdown.innerHTML = count;
+
+            let timer = setInterval(() => {
+                count--;
+                countdown.innerHTML = count;
+                if (count <= 0) {
+                    
+                    clearInterval(timer);
+                    location.reload();
+                }
+            }, 1000);
+           
             break;
         default:
             console.log("Unknown action:", input.action);
@@ -83,4 +105,10 @@ if (document.getElementById("class-session-ID")) {
     classWs.onerror = function (error) {
         console.log("WebSocket error:", error);
     };
+}
+
+function toggleBanner() {
+    const banner = document.getElementById('banner');
+    banner.classList.toggle('banner-visible');
+    banner.classList.toggle('banner-hidden');
 }

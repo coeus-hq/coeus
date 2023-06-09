@@ -166,6 +166,22 @@ func constructParticipantJoined(classSessionID, participantCount int) {
 	classSessionBroadcast(classSessionID, participantJoinedBytes)
 }
 
+func TriggerDemoBannerWarning() {
+	// Construct a JSON object
+	banner := map[string]interface{}{
+		"action": "demo-warning-banner",
+	}
+	// Marshal the endSession message
+	bannerWarning, err := json.Marshal(banner)
+	if err != nil {
+		log.Println("Error marshalling JSON:", err)
+		return
+	}
+
+	// Broadcast the "end-session" action to all active connections
+	generalBroadcast(bannerWarning)
+}
+
 // BROADCAST FUNCTIONS END
 
 // DATA PUMPS START

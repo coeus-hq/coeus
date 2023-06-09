@@ -69,10 +69,20 @@ func main() {
 
 		// Create a go channel that prints a message every 15 minutes
 		go func() {
-			ticker := time.NewTicker(15 * time.Minute)
+			ticker := time.NewTicker(14 * time.Minute)
 			for {
 				select {
 				case <-ticker.C:
+
+					// Delay the execution of the banner to keep the time interval at 15 minutes (14 + 0.5 + 0.5)
+					time.Sleep(30 * time.Second)
+
+					// Trigger the demo banner warning
+					controllers.TriggerDemoBannerWarning()
+
+					// Delay the reseed by 30 seconds to give the user time to read the warning
+					time.Sleep(30 * time.Second)
+
 					// Add your database reseeding function here
 					fmt.Println("Reseeding database...")
 

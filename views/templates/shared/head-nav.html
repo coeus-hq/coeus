@@ -101,3 +101,14 @@
         <!-- USER UNAUTHENTICATED HEADER -->
         {{ template "nav-unauthenticated.html" . }}
         {{end}}
+
+        {{ if eq.isDemo == true }}
+        <!-- DEMO RESEED DB BANNER -->
+        <div id="banner" class="banner-hidden">
+           This is a demo version of Coeus. 
+           <br>
+           All sample data is reseeded every 15 minutes.
+           <br>
+           Data reseeding in <span id="reseed-countdown"></span> seconds.
+        </div>
+        {{end}}
