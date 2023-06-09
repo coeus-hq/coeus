@@ -2226,7 +2226,7 @@ body {
   padding: 20px;
   text-align: center;
   position: fixed;
-  top: -110px;
+  top: -125px;
   left: 0;
   right: 0;
   transition: top 1s ease-in-out;

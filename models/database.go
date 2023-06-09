@@ -36,7 +36,7 @@ func NewDB() *sql.DB {
 			log.Fatal(err.Error())
 		}
 
-		if filename == "coeus-sample.db" {
+		if globals.DBTYPE == "coeus-sample" {
 			transaction(db, ddl_sample)
 		} else {
 			transaction(db, ddl_blank)
@@ -46,6 +46,13 @@ func NewDB() *sql.DB {
 		db, _ = sql.Open("sqlite3", filename)
 		if err != nil {
 			log.Fatal(err.Error())
+		}
+
+		// The database exists, but it may not have the correct tables so DDL must be run again
+		if globals.DBTYPE == "coeus-sample" {
+			transaction(db, ddl_sample)
+		} else {
+			transaction(db, ddl_blank)
 		}
 	}
 	return db

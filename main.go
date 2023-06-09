@@ -65,7 +65,7 @@ func main() {
 	if demoMode {
 		fmt.Println("****************************************************\n  Running in demo mode. \n****************************************************")
 		// Point to sample.db
-		globals.DBNAME = "coeus-sample"
+		globals.DBTYPE = "coeus-sample"
 
 		// Create a go channel that prints a message every 15 minutes
 		go func() {
@@ -95,7 +95,7 @@ func main() {
 	} else {
 		fmt.Println("****************************************************\n  Running in production mode. \n****************************************************")
 		// Point to coeus.db
-		globals.DBNAME = "coeus"
+		globals.DBTYPE = "coeus-production"
 	}
 
 	// Load environment variables from .env file
