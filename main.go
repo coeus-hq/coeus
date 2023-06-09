@@ -84,7 +84,7 @@ func main() {
 					time.Sleep(30 * time.Second)
 
 					// Add your database reseeding function here
-					fmt.Println("Reseeding database...")
+					fmt.Println("Reseeding the sample database...")
 
 					// Delete the existing database and create a new one
 					models.ReseedSampleDB()

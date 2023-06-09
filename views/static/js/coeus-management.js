@@ -6,6 +6,7 @@ import * as organizationSettings from './modules/management/organization-setting
 import * as utils from './modules/management/utils.js';
 import * as attendance from './modules/management/attendance.js';
 import * as onboarding from './modules/management/onboarding.js';
+import './modules/coeus/websockets.js';
 
 // Expose all imported functions to the global scope
 Object.assign(window, {

@@ -1085,12 +1085,12 @@ body {
     padding: 20px;
     text-align: center;
     position: fixed;
-    top: -100px;
+    top: -110px;
     left: 0;
     right: 0;
     transition: top 1s ease-in-out;
   }
-  
+ 
   .banner-visible {
     top: 0 !important;
   }
