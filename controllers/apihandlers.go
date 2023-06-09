@@ -18,6 +18,61 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func APIDarkThemePostHandler(c *gin.Context) {
+	session := sessions.Default(c)
+	userID := session.Get("userID").(int)
+
+	theme, err := new(models.Setting).ToggleDarkTheme(userID)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	if theme {
+		session.Set("cssStyle", "style-dark")
+		session.Save()
+	} else {
+		session.Set("cssStyle", "")
+		session.Save()
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+	})
+}
+
+type timezoneRequest struct {
+	Timezone string `json:"timezone"`
+}
+
+func APITimezonePostHandler(c *gin.Context) {
+	session := sessions.Default(c)
+	userID := session.Get("userID").(int)
+
+	var req timezoneRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// convert the timezone to an int
+	timezoneInt, err := strconv.Atoi(req.Timezone)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = new(models.Setting).UpdateTimezone(userID, timezoneInt)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	session.Set("timezone", req.Timezone)
+	session.Save()
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+	})
+}
+
 func APIQuestionsPostHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userID").(int)
@@ -283,6 +338,33 @@ func APIGetUserGetHandler(c *gin.Context) {
 		fmt.Println(err)
 	}
 
+	isDemo, err := new(models.Organization).GetStatus()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// If the database is for softlaunch, then remove the admin user from the slice of users structs
+	// this is done so that the admin user cannot be seen in the users table in the softlaunch database
+	// preventing someone from changing the admin credentials
+	if isDemo == "true" {
+		filteredUsers := make([]struct {
+			ID                   int64
+			Email                string
+			LastName             string
+			FirstName            string
+			CreatedAt            string
+			UpdatedAt            string
+			HighestModeratorType string
+		}, 0)
+		for _, user := range users {
+			if user.Email != "admin@coeus.education" {
+				filteredUsers = append(filteredUsers, user)
+			}
+		}
+		users = filteredUsers
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"users": users,
 	})
@@ -345,7 +427,6 @@ func APIAddUserPostHandler(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
 }
 
 func APIUpdateUserPutHandler(c *gin.Context) {
@@ -381,10 +462,13 @@ func APIUpdateUserPutHandler(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	// Update the user mod status to the database with the section id as NULL
-	_, err = new(models.Moderator).AdminUpdate(userIDInt, moderatorType)
-	if err != nil {
-		fmt.Println(err)
+	// If the moderatorType is not empty, then update the user mod status (this is mainly for admins)
+	if moderatorType != "" {
+		// Update the user mod status to the database with the section id as NULL
+		_, err = new(models.Moderator).AdminUpdate(userIDInt, moderatorType)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	// Parse the userID to an int64
@@ -486,7 +570,7 @@ func APIOnboardingPostHandler(c *gin.Context) {
 	var org Organization
 
 	// Parse multipart form data
-	err := c.Request.ParseMultipartForm(32 << 20) // limit your maxMemory here
+	err := c.Request.ParseMultipartForm(32 << 20)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

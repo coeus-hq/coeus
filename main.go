@@ -27,6 +27,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -42,7 +43,60 @@ var templatesEmbed embed.FS
 //go:embed views/static/*
 var staticEmbed embed.FS
 
+func checkDemoMode() bool {
+	if _, err := os.Stat("DEMO"); err == nil {
+		// If the file exists, return true
+		return true
+	} else if os.IsNotExist(err) {
+		// If the file does not exist, return false
+		return false
+	} else {
+		// In case of other errors (like permissions), log the error and return false
+		log.Println(err)
+		return false
+	}
+}
+
 func main() {
+
+	demoMode := checkDemoMode()
+
+	// Configure application based on demoMode
+	if demoMode {
+		fmt.Println("****************************************************\n  Running in demo mode. \n****************************************************")
+		// Point to sample.db
+		globals.DBNAME = "coeus-sample"
+
+		// Create a go channel that prints a message every 15 minutes
+		go func() {
+			ticker := time.NewTicker(14 * time.Minute)
+			for {
+				select {
+				case <-ticker.C:
+
+					// Delay the execution of the banner to keep the time interval at 15 minutes (14 + 0.5 + 0.5)
+					time.Sleep(30 * time.Second)
+
+					// Trigger the demo banner warning
+					controllers.TriggerDemoBannerWarning()
+
+					// Delay the reseed by 30 seconds to give the user time to read the warning
+					time.Sleep(30 * time.Second)
+
+					// Add your database reseeding function here
+					fmt.Println("Reseeding the sample database...")
+
+					// Delete the existing database and create a new one
+					models.ReseedSampleDB()
+				}
+			}
+		}()
+
+	} else {
+		fmt.Println("****************************************************\n  Running in production mode. \n****************************************************")
+		// Point to coeus.db
+		globals.DBNAME = "coeus"
+	}
 
 	// Load environment variables from .env file
 	err := godotenv.Load("globals/.env")

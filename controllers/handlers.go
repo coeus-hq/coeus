@@ -45,13 +45,12 @@ func SignInGetHandler(c *gin.Context) {
 	if userID != nil {
 		c.Redirect(http.StatusSeeOther, "/")
 	} else {
-
 		// CheckAPIKey function to check if the API key exists
 		canResetPassword, _ := new(models.Organization).CheckAPIKey()
-
 		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
 			"canResetPassword": canResetPassword,
 		})
+
 	}
 }
 
@@ -77,11 +76,17 @@ func SignInPostHandler(c *gin.Context) {
 
 	userID := session.Get("userID")
 
-	if userID != nil {
+	// Check if the database is demo
+	isDemo, err := new(models.Organization).GetStatus()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// Set the isDemo to the session
+	session.Set("isDemo", isDemo)
 
-		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": "Please logout first",
-		})
+	if userID != nil {
+		RenderTemplate(c, http.StatusOK, "/logout", gin.H{})
 		return
 	}
 
@@ -95,9 +100,7 @@ func SignInPostHandler(c *gin.Context) {
 	password := c.PostForm("password")
 
 	if helpers.EmptyUserPass(username, password) {
-		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": "Parameters can't be empty",
-		})
+		c.JSON(http.StatusInternalServerError, gin.H{"content": "Parameters can't be empty"})
 	}
 
 	u := new(models.User)
@@ -141,34 +144,31 @@ func SignInPostHandler(c *gin.Context) {
 		// The following code is used to redirect the user to the correct page
 		// after sign-in depending on their role
 
-		// Check if the user is an instructor
+		// Determine the user's role
+		var role string
 		IsInstructor, err := new(models.Moderator).IsInstructor(id)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// If the user is an instructor, redirect to the instructor dashboard.
 		if IsInstructor {
+			role = "instructor"
 			session.Set("isInstructor", true)
 			session.Save()
-
-			c.Redirect(http.StatusSeeOther, "/")
 		} else if id == adminID {
-			// If the user is a superadmin, redirect to the admin dashboard.
+			role = "admin"
 			session.Set("isAdmin", true)
 			session.Save()
-
-			c.Redirect(http.StatusSeeOther, "/admin")
 		} else {
-			// If user is not an admin, and redirect to the my-courses page
-			c.Redirect(http.StatusSeeOther, "/")
+			role = "student"
 		}
 
-	} else {
-		RenderTemplate(c, http.StatusOK, "sign-in.html", gin.H{
-			"content": "Incorrect username or password. For soft launch: Database may not be seeded yet (scroll down).",
-		})
+		// If user is authenticated, send a success status with role information.
+		c.JSON(http.StatusOK, gin.H{"success": true, "role": role})
+		return
 	}
+
+	c.JSON(http.StatusUnauthorized, gin.H{"content": "Invalid username or password"})
 }
 
 func LogoutGetHandler(c *gin.Context) {
@@ -214,8 +214,10 @@ func CreateAccountPostHandler(c *gin.Context) {
 	if err != nil {
 		log.Println("Failed to add user:", err)
 
-		// Render an error message or redirect to an error page
-		c.Redirect(http.StatusSeeOther, "/create-account")
+		// Send an error message back to the client
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "User already exists",
+		})
 		return
 	}
 
@@ -287,6 +289,14 @@ func SettingsGetHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userID")
 
+	// Add a check to ensure the type assertion won't panic
+	userIDint, ok := userID.(int)
+	if !ok {
+		// Handle the case where userID is not an int
+		fmt.Println("userID is not an int")
+		return
+	}
+
 	setting := new(models.Setting)
 	s, _ = setting.Get(userID.(int))
 
@@ -297,12 +307,26 @@ func SettingsGetHandler(c *gin.Context) {
 		checked = ""
 	}
 
+	// Convert int to int64
+	userIDint64 := int64(userIDint)
+
+	user, err := new(models.User).Get(userIDint64)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	session.Set("timezone", s.TimezoneOffset)
+	session.Save()
+
 	RenderTemplate(c, http.StatusOK, "settings.html", gin.H{
-		"content":  "Settings page",
-		"checked":  checked,
-		"timezone": s.TimezoneOffset,
+		"content":   "Settings page",
+		"checked":   checked,
+		"firstName": user.FirstName,
+		"lastName":  user.LastName,
+		"email":     user.Email,
 	})
 }
+
 func SettingsPostHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userID").(int)
@@ -710,7 +734,7 @@ func AdminUsersGetHandler(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	// set the admin initials to the session
+	// Set the admin initials to the session
 	adminInitials, err := new(models.User).GetUserInitials(adminID)
 	if err != nil {
 		fmt.Println(err)
@@ -724,7 +748,6 @@ func AdminUsersGetHandler(c *gin.Context) {
 		"count":        userCount,
 		"organization": organization,
 	})
-
 }
 
 func InstructorCoursesGetHandler(c *gin.Context) {

@@ -3,18 +3,27 @@
 <section class="text-left mt-5 form-wrapper">
   <img class="coeus-create-account-logo" src="/static/images/coeus-logo-login.png" alt="Coeus logo">
 
-  <form action="/sign-in" method="post">
+<form onsubmit="deleteCookies(), signInForm(event)">
+
     <h2 class="sign-in-header mb-3">Sign in</h2>
+
+    {{if eq .isDemo "true"}}
     <input name="username" type="email" id="emailAddress" class="coeus-input form-control sign-in-form-control"
       placeholder="Email: admin@coeus.education" value="student@coeus.education">
     <input name="password" type="password" id="password" class="coeus-input form-control sign-in-form-control"
       placeholder="Password: coeus" value="coeus">
-
-    {{if .content}}
-    <div class="alert alert-danger mt-4" role="alert">
-      {{.content}}
-    </div>
+    {{else}}
+    <input name="username" type="email" id="emailAddress" class="coeus-input form-control sign-in-form-control"
+      placeholder="Email">
+    <input name="password" type="password" id="password" class="coeus-input form-control sign-in-form-control"
+      placeholder="Password">
     {{end}}
+
+  
+    <div id="sign-in-fail-alert" class="hidden alert alert-danger mt-4" role="alert">
+     
+    </div>
+    
 
     <div id="password-reset-success-alert" class="alert alert-success mt-4" role="alert">
       Your password has been reset.
@@ -26,14 +35,20 @@
     </a>
     {{end}}
 
-    <button onclick="deleteCookies()" type="submit" class="coeus-gradient-btn">Sign in</button>
+    <button type="submit" class="coeus-gradient-btn">Sign in</button>
   </form>
 
+
+  <section class="create-account-helper-wrapper">
+    <p class="create-account-helper">Don't have an account? </p>
+    <a href="/create-account" class="create-account-link">Create account</a>
+  </section>
+
+  
+{{if eq .isDemo "true"}}
+
+{{template "demo.html" .}}
+
+{{end}}
 </section>
 
-<section class="create-account-helper-wrapper">
-  <p class="create-account-helper">Don't have an account? </p>
-  <a href="/create-account" class="create-account-link">Create account</a>
-</section>
-
-{{template "soft-launch.html" .}}

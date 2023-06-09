@@ -17,10 +17,13 @@ import (
 func NewDB() *sql.DB {
 	var db *sql.DB
 
-	// TODO load config from .env using embedFS if running as a single binary
+	if db != nil {
+		db.Close()
+	}
 
 	// Check to see the file exists
 	var filename string = globals.DBNAME + ".db"
+
 	_, err := os.Stat(filename)
 	if errors.Is(err, os.ErrNotExist) {
 		fmt.Println("Creating database…")
@@ -32,17 +35,28 @@ func NewDB() *sql.DB {
 		if err != nil {
 			log.Fatal(err.Error())
 		}
-		transaction(db, ddl)
-		return db
-	}
 
-	// File/Database exists. Open it and return a connection
-	db, _ = sql.Open("sqlite3", filename)
-	if err != nil {
-		log.Fatal(err.Error())
+		if filename == "coeus-sample.db" {
+			transaction(db, ddl_sample)
+		} else {
+			transaction(db, ddl_blank)
+		}
+	} else {
+		// File/Database exists. Open it and return a connection
+		db, _ = sql.Open("sqlite3", filename)
+		if err != nil {
+			log.Fatal(err.Error())
+		}
 	}
-
 	return db
+}
+
+// ReseedSampleDB drops tables in the existing database and reseeds a new one with sample data
+func ReseedSampleDB() {
+	db := NewDB()
+
+	// Pass the database connection to the transaction function
+	transaction(db, ddl_sample)
 }
 
 // transaction executes an array of SQL statememts in a single transaction.

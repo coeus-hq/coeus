@@ -2,12 +2,28 @@ package controllers
 
 import (
 	"coeus/models"
+	"fmt"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 
 	"net/http"
 )
+
+func CheckDatabaseType(c *gin.Context) {
+	session := sessions.Default(c)
+
+	isDemo, err := new(models.Organization).GetStatus()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	session.Set("isDemo", isDemo)
+	session.Save()
+
+	c.Next()
+}
 
 // If the organization is not set, redirect to the organization page
 func OrganizationRequired(c *gin.Context) {
@@ -18,10 +34,24 @@ func OrganizationRequired(c *gin.Context) {
 		// Check if the current route is not the onboarding page
 		if c.Request.URL.Path != "/onboarding" {
 			c.Abort()
-			c.Redirect(http.StatusMovedPermanently, "/onboarding")
+			c.Redirect(http.StatusSeeOther, "/onboarding")
 			return
 		}
 	}
+	c.Next()
+}
+
+func PreventOnboardingIfOrganizationExists(c *gin.Context) {
+	// Check if organization exists
+	organizationExists := new(models.Organization).OrganizationExists()
+
+	// If organization exists and the user tries to access onboarding page, redirect them
+	if organizationExists && c.Request.URL.Path == "/onboarding" {
+		c.Redirect(http.StatusSeeOther, "/")
+		c.Abort()
+		return
+	}
+
 	c.Next()
 }
 

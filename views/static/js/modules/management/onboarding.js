@@ -134,6 +134,7 @@ export function submitOnboarding(e) {
     formData.append('apiKey', apiKey);
     formData.append('email', email);
 
+
     fetch('/api/onboarding', {
         method: 'POST',
         body: formData

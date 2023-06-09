@@ -15,6 +15,7 @@ type Organization struct {
 	Onboarding           string
 	CreatedAt            string
 	UpdatedAt            string
+	IsDemo               bool
 }
 
 // ** CREATE **
@@ -33,7 +34,7 @@ func (o Organization) Add(name, organizationTimezone, logoPath, apiKey, email st
 		return 0, fmt.Errorf("unable to delete existing organization: %v", err)
 	}
 
-	// Insert new organization
+	// Insert new organization with the is_demo flag set to false
 	sqlStatement := `
 		INSERT INTO
 			organization
@@ -47,7 +48,8 @@ func (o Organization) Add(name, organizationTimezone, logoPath, apiKey, email st
 			$5,
 			true,
 			datetime('now'),
-			datetime('now')
+			datetime('now'),
+			false
 			)
 		RETURNING id`
 	var ID int
@@ -81,6 +83,31 @@ func (o Organization) SetAdmin(userID int) error {
 }
 
 // ** READ **
+// GetStatus retrieves the status of the organization.
+// It returns a string and any error encountered.
+func (o Organization) GetStatus() (string, error) {
+	db := NewDB()
+	var status string
+	sqlStatement := `
+	SELECT
+		is_demo
+	FROM
+		organization
+	LIMIT
+		1;
+	`
+
+	row := db.QueryRow(sqlStatement)
+	switch err := row.Scan(&status); err {
+	case sql.ErrNoRows:
+		return "", err
+	case nil:
+		return status, nil
+	default:
+		return "", err
+	}
+}
+
 // Get retrieves an organization from the database.
 // It returns an Organization object and any error encountered.
 func (o Organization) Get(orgID int) (Organization, error) {
@@ -93,6 +120,7 @@ func (o Organization) Get(orgID int) (Organization, error) {
 	var APIKey string
 	var Email string
 	var Onboarding string
+	var IsDemo bool
 
 	db := NewDB()
 	sqlStatement := `
@@ -104,11 +132,11 @@ func (o Organization) Get(orgID int) (Organization, error) {
 			id = $1;`
 
 	row := db.QueryRow(sqlStatement, orgID)
-	switch err := row.Scan(&id, &Name, &OrganizationTimezone, &LogoPath, &APIKey, &Email, &Onboarding, &CreatedAt, &UpdatedAt); err {
+	switch err := row.Scan(&id, &Name, &OrganizationTimezone, &LogoPath, &APIKey, &Email, &Onboarding, &CreatedAt, &UpdatedAt, &IsDemo); err {
 	case sql.ErrNoRows:
 		return Organization{}, err
 	case nil:
-		organization := Organization{id, Name, OrganizationTimezone, LogoPath.String, APIKey, Email, Onboarding, CreatedAt, UpdatedAt}
+		organization := Organization{id, Name, OrganizationTimezone, LogoPath.String, APIKey, Email, Onboarding, CreatedAt, UpdatedAt, IsDemo}
 		return organization, err
 	default:
 		return Organization{}, err

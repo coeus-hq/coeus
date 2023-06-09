@@ -5,6 +5,9 @@ import (
 )
 
 func APIRoutes(g *gin.RouterGroup) {
+	g.POST("/api/settings/dark-theme", APIDarkThemePostHandler)
+	g.PUT("/api/settings/timezone", APITimezonePostHandler)
+
 	g.GET("/api/questions/:classSessionID", APIMessagesGetHandler)
 	g.POST("/api/questions/:classSessionID", APIQuestionsPostHandler)
 	g.POST("/api/vote-up/:questionID", VoteUpPostHandler)
