@@ -214,8 +214,10 @@ func CreateAccountPostHandler(c *gin.Context) {
 	if err != nil {
 		log.Println("Failed to add user:", err)
 
-		// Render an error message or redirect to an error page
-		c.Redirect(http.StatusSeeOther, "/create-account")
+		// Send an error message back to the client
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "User already exists",
+		})
 		return
 	}
 

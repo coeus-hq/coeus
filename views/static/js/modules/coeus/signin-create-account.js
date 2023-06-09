@@ -30,17 +30,20 @@ export function validateCreateAccountForm(e) {
   }
 
   let formData = new FormData(document.getElementById("createAccountForm"));
-
   fetch('/create-account', {
     method: 'POST',
     body: formData
   })
     .then(response => {
-
       if (response.status === 200) {
         window.location.href = "/";
       } else {
-        alert.innerHTML = "Error creating account.";
+        return response.json();
+      }
+    })
+    .then(data => {
+      if (data) {
+        alert.innerHTML = data.message || "Error creating account.";
         alert.style.display = "block";
         setTimeout(function () {
           alert.style.display = "none";
@@ -50,6 +53,7 @@ export function validateCreateAccountForm(e) {
     .catch((error) => {
       console.error('Error:', error);
     });
+
 }
 
 export function signInForm(e) {
