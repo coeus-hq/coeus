@@ -762,6 +762,54 @@ func TestGetOrganizationID(t *testing.T) {
 
 }
 
+func TestUpdateOrganizationName(t *testing.T) {
+
+	// Get the organization ID from the database
+	ID, err := new(User).GetOrganizationID()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Update the organization name in the database
+	err = new(Organization).UpdateName(ID, "Test Organization Name")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+}
+
+func TestUpdateOrganizationTime(t *testing.T) {
+
+	// Get the organization ID from the database
+	ID, err := new(User).GetOrganizationID()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Update the organization timezone in the database
+	err = new(Organization).UpdateTimeZone(ID, "0")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+}
+
+func TestUpdateOrganizationUpdateAPIKeyAndEmail(t *testing.T) {
+
+	// Get the organization ID from the database
+	ID, err := new(User).GetOrganizationID()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Update the organization timezone in the database
+	err = new(Organization).UpdateAPIKeyAndEmail(ID, "Test API Key", "Test Email")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+}
+
 func TestAddUserToOrganization(t *testing.T) {
 
 	// Add a user to an organization with a known user ID and organization ID

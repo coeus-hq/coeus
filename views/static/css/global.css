@@ -185,7 +185,7 @@ body {
 }
 
 .end-modal-button {
-  background-color: #526481 !important;
+  background-color: #526481;
   color: white;
   border: none;
   border-radius: 7px;
@@ -498,6 +498,11 @@ body {
   align-items: center;
   color: #FFFFFF;
   justify-content: center;
+}
+
+.end-session-btn:hover {
+  background: #3e4a5e;
+  color: #FFFFFF;
 }
 
 .mark-answered-btn {
@@ -1236,54 +1241,63 @@ body {
   color: #FFFFFF;
 }
 
+.coeus-secondary-btn {
+  display: block;
+  border: none;
+  margin: auto;
+  width: 198px;
+  height: 40px;
+  background: #526481;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.coeus-secondary-btn:hover {
+  background: #3e4a5e;
+  color: #FFFFFF;
+}
+
+.coeus-secondary-btn-link {
+  display: flex;
+  border: none;
+  text-decoration: none;
+  margin: auto;
+  width: 198px;
+  height: 40px;
+  background: #526481;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  align-content: stretch;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.coeus-secondary-btn-link:hover {
+  background: #3e4a5e;
+  color: #FFFFFF;
+}
+
+.secondary-btn-large{
+  width: fit-content !important;
+  padding: 5px 10px !important;
+}
+
+.coeus-gradient-btn:hover {
+  color: #FFFFFF;
+}
+
 #create-account-danger-alert {
   display: none;
 }
 /* SIGN IN / CREATE ACCOUNT END */
 
 /* NEW MY COURSES PAGE START */
-
-.mc-add-course-btn {
-  display: flex;
-    border: none;
-    text-decoration: none;
-    margin: auto;
-    width: 198px;
-    height: 40px;
-    background: linear-gradient(90deg, #95A9C9 21.35%, #526481 99.99%, #4C5A6F 100%);
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #FFFFFF;
-    align-content: stretch;
-    justify-content: space-around;
-    align-items: center;
-}
-.mc-add-course-btn:hover {
-  color: #FFFFFF;
-}
-
-.mc-create-a-course-link {
-  text-decoration: none;
-  display: flex;
-  border: none;
-  margin: auto;
-  width: 198px;
-  height: 40px;
-  background: linear-gradient(90deg, #95A9C9 21.35%, #526481 99.99%, #4C5A6F 100%);
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #FFFFFF;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.mc-create-a-course-link:hover {
-  color: #FFFFFF;
-}
 
 .my-courses-header {
   margin-bottom: 0 !important;
@@ -1385,7 +1399,10 @@ body {
   color: #FFFFFF;
   margin-top: 1rem;
 }
-
+.add-mod-btn:hover {
+  background: #3e4a5e;
+  color: #FFFFFF;
+}
 
 
 .instructor-start-session-button {
@@ -1407,31 +1424,6 @@ body {
   justify-content: space-evenly;
   align-items: center;
   text-decoration: none;
-}
-
-.start-session-button {
-  display: flex;
-  padding: auto;
-  gap: 10px;
-  width: 150px;
-  height: 50px;
-  text-decoration: none;
-  background: linear-gradient(90deg, #FFFFFF 99.99%, rgba(77, 146, 72, 0.99) 100%);
-  border-radius: 8px;
-  font-weight: 500;
-  margin: auto;
-  line-height: 24px;
-  color: #333;
-  margin: 1rem auto 0 auto;
-  border: none;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-decoration: none;
-}
-
-.start-session-button:hover {
-  color: #333;
 }
 
 .my-course-card-active-false {
@@ -1546,18 +1538,6 @@ body {
   color: rgba(48, 43, 43, 0.7);
 }
 
-.coeus-gradient-btn-instructor {
-  border: none;
-  margin: auto;
-  width: 198px;
-  height: 40px;
-  background: linear-gradient(90deg, #95A9C9 21.35%, #526481 99.99%, #4C5A6F 100%);
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #FFFFFF;
-}
 
 .my-course-card-button-active-true {
   display: flex;
@@ -1694,50 +1674,6 @@ body {
   line-height: 24px;
   color: #FFFFFF;
   border: none;
-}
-
-.cs-course-search-btn-link {
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  width: 198px;
-  height: 40px;
-  background: linear-gradient(90deg, #95A9C9 21.35%, #526481 99.99%, #4C5A6F 100%);
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #FFFFFF;
-  border: none;
-}
-
-.cs-course-search-btn-link:hover {
-  color: #FFFFFF;
-}
-
-.cs-course-management-btn {
-  display: flex;
-  margin-top: 1.5rem !important;
-  margin: auto;
-  height: 40px;
-  background: linear-gradient(90deg, #95A9C9 21.35%, #526481 99.99%, #4C5A6F 100%);
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #FFFFFF;
-  padding-right: 20px;
-  padding-left: 20px;
-  border: none;
-  text-decoration: none;
-  width: fit-content;
-  align-items: center;
-}
-
-.cs-course-management-btn:hover {
-  color: #FFFFFF;
 }
 
 /* NEW COURSE SEARCH NAVBAR END */
@@ -2024,6 +1960,10 @@ body {
   background: #526481;
   border-radius: 10px;
 }
+.end-modal-button:hover {
+  background: #3e4a5e;
+  color: #FFFFFF;
+}
 
 .cancel-modal-button {
   color: #526481;
@@ -2063,13 +2003,6 @@ body {
   color: #A3B4CF;
 }
 
-.a-styles-removal {
-  text-decoration: none !important;
-  color: white !important;
-  flex-direction: column;
-  display: flex !important;
-  justify-content: space-around;
-}
 
 .a-font {
   margin: 0 0;
@@ -2091,6 +2024,10 @@ body {
   height: 380px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+}
+
+.override-end-session-modal{
+  height: 565px !important;
 }
 
 .delete-modal-height {
@@ -2232,6 +2169,9 @@ body {
   transition: top 1s ease-in-out;
 }
 
+.banner-visible {
+  top: 0 !important;
+}
 .banner-visible {
   top: 0 !important;
 }

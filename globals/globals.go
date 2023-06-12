@@ -9,7 +9,7 @@ import (
 
 var Secret = []byte("secret")
 
-var DBNAME = "coeus"
+var DBNAME = "coeus-sample"
 
 // Hack: Change CWD to project root for both running main and
 // testing. Import "coeus/globals" in *_test.go files to set the

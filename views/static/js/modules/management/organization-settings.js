@@ -27,7 +27,7 @@ export async function submitOrgSettingsForm() {
 
     try {
         const response = await fetch('/api/organization', {
-            method: 'POST',
+            method: 'PUT',
             body: formData
         });
 
@@ -35,9 +35,17 @@ export async function submitOrgSettingsForm() {
         const failToast = document.getElementById("settingsSavedFail");
 
         if (response.ok) {
-            // Clear choose file input
-            const fileInput = document.getElementById("upload-logo-input");
-            fileInput.value = "";
+          
+           
+
+            //  In demo mode, the user is not allowed to change the organization name, api key, or sendgrid email
+            if(document.getElementById("org-name")){
+                document.getElementById("upload-logo-input").value = "";
+                document.getElementById("org-name").value = "";
+                document.getElementById("apiKey").value = "";
+                document.getElementById("sendGridEmail").value = "";
+            }
+          
             successToast.classList.add("show");
             setTimeout(function () {
                 successToast.classList.remove("show");

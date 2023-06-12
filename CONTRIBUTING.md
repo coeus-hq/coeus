@@ -8,7 +8,7 @@ While you're free to add features that aren't listed in the project's issues, yo
 
 ### New to the Project?
 
-If you're interested in contributing but don't know where to start, feel free to schedule a time with repository manager Collin https://calendly.com/collin-w to learn more about the codebase. He will provide you with a helpful overview and answer any questions you might have.
+If you're interested in contributing but don't know where to start, feel free to schedule a time with repository manager Collin cwhalen@instructors.2u.com (send an email and your availability with your timezone) to learn more about the codebase. He will provide you with a helpful overview and answer any questions you might have.
 
 ## Naming Conventions
 

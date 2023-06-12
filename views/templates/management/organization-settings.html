@@ -2,7 +2,7 @@
 
 <div class="container">
     <div id="" class="page-content-wrapper ">
-        <h2 class="my-5">Settings</h2>
+        <h2 class="mgmt-h2 my-5">Settings</h2>
 
         <form id="settings-form" class="d-flex flex-column" enctype="multipart/form-data"
             onsubmit="event.preventDefault(); submitOrgSettingsForm();">
@@ -18,10 +18,8 @@
                         <option value="" disabled selected>Select a timezone</option>
                         <option value="-480">PST (UTC-8)</option>
                         <option value="-420">MST (UTC-7)</option>
-                        <option value="-420">MDT (UTC-6)</option>
                         <option value="-360">CST (UTC-6)</option>
                         <option value="-300">CDT (UTC-5)</option>
-                        <option value="-300">EST (UTC-5)</option>
                         <option value="-240">EDT (UTC-4)</option>
                         <option value="0">UTC</option>
                         <option value="60">CET (UTC+1)</option>
@@ -31,6 +29,16 @@
                 </section>
 
                 {{if eq .isDemo "false"}}
+
+                <section class="onboarding-section-wrapper">
+                    <h2 class="onboarding-section-header mb-3">
+                        Update organization name
+                    </h2>
+
+                    <input type="text" name="org-name" id="org-name"
+                        class="org-setting-input onboarding-input form-control" placeholder="Enter organization name">
+                </section>
+
                 <section class="onboarding-section-wrapper">
 
                     <h2 class="onboarding-section-header mb-3">
@@ -48,7 +56,7 @@
                         <p class="logo-success-message">Image uploaded successfully </p>
                     </div>
 
-                    <button type="button" id="delete-logo-btn" class="btn btn-danger mt-3 w-25"
+                    <button type="button" id="delete-logo-btn" class="org-logo-delete-btn mt-3 w-25"
                         onclick="onDeleteLogoButtonClick()">Delete</button>
                 </section>
                 {{end}}
@@ -72,16 +80,16 @@
             </section>
 
             {{end}}
-            <button type="submit" class="coeus-gradient-btn organization-settings-save-btn">
+            <button type="submit" class="coeus-org-setting-btn organization-settings-save-btn">
                 Save Settings
             </button>
 
         </form>
 
-       
+
         <hr class="my-5">
 
-        <a class="coeus-gradient-btn-link organization-settings-save-btn " href="/logout">Log out</a>
+        <a class="coeus-org-setting-btn-link organization-settings-save-btn " href="/logout">Log out</a>
 
     </div>
 

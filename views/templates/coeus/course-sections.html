@@ -42,9 +42,9 @@
 
             {{else}}
             <p class="my-5">No sections found for this course.</p>
-            <a href="/course-search" class="cs-course-search-btn a-styles-removal">
+            <a href="/course-search" class="coeus-secondary-btn-link">
                 <p class="a-font">Back to search</p>
-                </a>
+            </a>
             <hr class="my-3">
 
             {{end}}
@@ -54,11 +54,11 @@
             </p>
 
             {{if len .sections}}
-            <button id="add-section-button" type="button" class="cs-course-search-btn r-mb4"
+            <button id="add-section-button" type="button" class="coeus-secondary-btn r-mb4"
                 onclick="validateSectionForm()">Add Section</button>
 
             {{else}}
-            <a href="/" class="cs-course-search-btn a-styles-removal">
+            <a href="/" class="coeus-secondary-btn-link">
                 <p class="a-font">Go home</p>
             </a>
             {{end}}
@@ -67,8 +67,8 @@
                 <p>
                     You are already enrolled in the only section available.
                 </p>
-                <a href="/" class="cs-course-search-btn a-styles-removal">
-                    <p class="a-font" >Go home</p>
+                <a href="/" class="coeus-secondary-btn-link">
+                    <p class="a-font">Go home</p>
                 </a>
             </div>
 
