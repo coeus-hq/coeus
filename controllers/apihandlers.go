@@ -759,36 +759,6 @@ func writeAPIKeyToEnv(apiKey string, email string) error {
 	return nil
 }
 
-func APIDatabaseResetGetHandler(c *gin.Context) {
-	fmt.Println("Resetting the database...")
-
-	// Reset the database
-	err := new(models.Organization).DatabaseReset()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Println("Database reset complete.")
-
-	// Redirect to the onboarding page to create a new organization
-	c.Redirect(http.StatusFound, "/onboarding")
-}
-
-func APIDatabaseSeedGetHandler(c *gin.Context) {
-	fmt.Println("Seeding the database...")
-
-	// Seed the database
-	err := new(models.Organization).DatabaseSeed()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Println("Database seeding complete.")
-
-	// Send a success response
-	c.JSON(http.StatusOK, gin.H{"success": true})
-}
-
 func APICoursesGetHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userID").(int)
