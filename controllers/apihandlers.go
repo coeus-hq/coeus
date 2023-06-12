@@ -649,9 +649,15 @@ func APIOnboardingPostHandler(c *gin.Context) {
 func APIOrganizationPostHandler(c *gin.Context) {
 	session := sessions.Default(c)
 
+	// Get the organization id
+	organizationID, err := new(models.Organization).GetOrganizationID()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// If a logo was uploaded, process it
 	file, err := c.FormFile("upload-logo-input")
 	if err == nil {
-
 		// Get the file extension
 		fileExtension := filepath.Ext(file.Filename)
 
@@ -676,12 +682,6 @@ func APIOrganizationPostHandler(c *gin.Context) {
 			fmt.Println(err)
 		}
 
-		// Get the organization id
-		organizationID, err := new(models.Organization).GetOrganizationID()
-		if err != nil {
-			fmt.Println(err)
-		}
-
 		// Append the logo path of /static/logo/ to the file name
 		fileName = "/static/logo/" + fileName
 
@@ -701,13 +701,39 @@ func APIOrganizationPostHandler(c *gin.Context) {
 		session.Set("organizationLogo", organization.LogoPath)
 	}
 
-	if c.PostForm("org-settings-sendgrid-api-key") != "" {
+	// Handle time zone update
+	timeZone := c.PostForm("time-zone-select")
+	if timeZone != "" {
+		err := new(models.Organization).UpdateTimeZone(organizationID, timeZone)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update time zone"})
+			return
+		}
+	}
 
+	// Handle organization name update
+	orgName := c.PostForm("org-name")
+	if orgName != "" {
+		err := new(models.Organization).UpdateName(organizationID, orgName)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update organization name"})
+			return
+		}
+	}
+
+	if c.PostForm("org-settings-sendgrid-api-key") != "" {
 		apiKey := c.PostForm("org-settings-sendgrid-api-key")
 		email := c.PostForm("org-settings-sendgrid-email")
 
 		// Write the API key and email to the .env file
 		err = writeAPIKeyToEnv(apiKey, email)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Update the API key and email in the database
+		err = new(models.Organization).UpdateAPIKeyAndEmail(organizationID, apiKey, email)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

@@ -15,10 +15,6 @@ As a community-driven initiative, we invite contributions from developers, educa
 
 Join us to transform the learning experience with Coeus Education.
 
-## On Going Bug Bounty 5/29-6/2
-
-[Bug Bounty Guide](https://docs.google.com/document/d/1WMgcCPYEXMIpv11XFbWPCREjduoH1u_EN_5Pl__NRaQ/edit?usp=sharing)
-
 ## Technologies
 
 Coeus Education leverages the following stack:

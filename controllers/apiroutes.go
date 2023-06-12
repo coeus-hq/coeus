@@ -26,7 +26,8 @@ func APIRoutes(g *gin.RouterGroup) {
 
 	g.POST("/api/admin", APIAddAdminPostHandler)
 	g.POST("/api/onboarding", APIOnboardingPostHandler)
-	g.POST("/api/organization", APIOrganizationPostHandler)
+
+	g.PUT("/api/organization", APIOrganizationPostHandler)
 
 	g.GET("/api/course", APICoursesGetHandler)
 	g.POST("/api/course", APICoursesPostHandler)

@@ -28,7 +28,7 @@
                 <br>
                 like to add a course?
             </h4>
-            <a href="/course-search" class="mc-add-course-btn">Add Course</a>
+            <a href="/course-search" class="coeus-secondary-btn-link">Add Course</a>
         </div>
 
         {{else}}
@@ -38,7 +38,7 @@
                 <br>
                 like to create a course?
             </h4>
-            <a href="/instructor" class="mc-create-a-course-link">Create a Course</a>
+            <a href="/instructor" class="coeus-secondary-btn-link">Create a Course</a>
         </div>
 
         {{end}}
@@ -187,7 +187,7 @@
         </div>
         <hr class="my-5">
         <button value="{{.sectionID}}" id="start-session-button"
-            class="  start-session-button coeus-gradient-btn-instructor"
+            class="coeus-secondary-btn"
             onclick="startSessionClick(this, '{{.classSessionID}}', '{{.sectionID}}')">
             Start Session
         </button>

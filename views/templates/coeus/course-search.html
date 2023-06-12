@@ -18,13 +18,13 @@
         <input type="text" id="courseIdentifier" class="course-search-input form-control " name="courseIdentifier"
             placeholder="Course # or name" />
 
-        <button type="submit" class="cs-course-search-btn">Search</button>
+        <button type="submit" class="coeus-secondary-btn">Search</button>
     </form>
     
     {{if eq .isDemo "true"}}
     <hr>
 
-    <p style="margin-top: 4rem; margin-bottom: 4rem;">For soft launch:
+    <p style="margin-top: 4rem; margin-bottom: 4rem;">For demo:
         <br>
         Our live testing course is
         <br>
@@ -37,7 +37,7 @@
     {{if .isInstructor}}
     <hr class="my-5">
     <div class="d-flex justify-content-end">
-        <a href="/instructor" class="cs-course-management-btn  mt-4 m-auto">Course
+        <a href="/instructor" class="coeus-secondary-btn-link secondary-btn-large">Course
             Management
             Page
         </a>

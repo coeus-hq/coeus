@@ -249,6 +249,70 @@ func (o Organization) StoreLogo(orgID int, path string) error {
 	return nil
 }
 
+// UpdateName updates the name of an organization in the database.
+// It returns any error encountered.
+func (o Organization) UpdateName(orgID int, name string) error {
+	db := NewDB()
+
+	sqlStatement := `
+		UPDATE 
+			organization
+		SET
+			name = $1
+		WHERE
+			id = $2`
+
+	_, err := db.Exec(sqlStatement, name, orgID)
+	if err != nil {
+		return fmt.Errorf("unable to update name: %v", err)
+	}
+
+	return nil
+}
+
+// UpdateTimeZone updates the time zone of an organization in the database.
+// It returns any error encountered.
+func (o Organization) UpdateTimeZone(orgID int, timeZone string) error {
+	db := NewDB()
+
+	sqlStatement := `
+		UPDATE 
+			organization
+		SET
+			organization_timezone = $1
+		WHERE
+			id = $2`
+
+	_, err := db.Exec(sqlStatement, timeZone, orgID)
+	if err != nil {
+		return fmt.Errorf("unable to update time zone: %v", err)
+	}
+
+	return nil
+}
+
+// UpdateAPIKeyAndEmail updates the API key and email of an organization in the database.
+// It returns any error encountered.
+func (o Organization) UpdateAPIKeyAndEmail(orgID int, apiKey string, email string) error {
+	db := NewDB()
+
+	sqlStatement := `
+		UPDATE
+			organization
+		SET
+			api_key = $1,
+			email = $2
+		WHERE
+
+			id = $3`
+	_, err := db.Exec(sqlStatement, apiKey, email, orgID)
+	if err != nil {
+		return fmt.Errorf("unable to update API key and email: %v", err)
+	}
+
+	return nil
+}
+
 // ** DELETE **
 // Delete deletes an organization from the database.
 // It returns any error encountered.
